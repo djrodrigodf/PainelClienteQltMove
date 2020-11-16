@@ -89,6 +89,12 @@ class Cliente extends Model
         return $date->format('Y-m-d H:i:s');
     }
 
+    public static function boot()
+    {
+        parent::boot();
+        Cliente::observe(new \App\Observers\ClienteActionObserver);
+    }
+
     public function getDtEmissaoRgAttribute($value)
     {
         return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
