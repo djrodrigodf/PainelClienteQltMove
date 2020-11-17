@@ -18,4 +18,8 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
 
     // Referencia Bancaria
     Route::apiResource('referencia-bancaria', 'ReferenciaBancariaApiController');
+
+    Route::get('meusuario', function() {
+        return response()->json(request()->user());
+    });
 });
