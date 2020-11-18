@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\Auditable;
 use App\Traits\MultiTenantModelTrait;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,7 +12,7 @@ use \DateTimeInterface;
 
 class Cliente extends Model
 {
-    use SoftDeletes, MultiTenantModelTrait, HasFactory;
+    use SoftDeletes, MultiTenantModelTrait, Auditable, HasFactory;
 
     public $table = 'clientes';
 
@@ -60,6 +61,8 @@ class Cliente extends Model
         'tel_resid',
         'tel_celular',
         'email',
+        'plano',
+        'valor_plano',
         'prof_nome_da_empresa',
         'prof_endereco_comercial',
         'prof_cnpj',

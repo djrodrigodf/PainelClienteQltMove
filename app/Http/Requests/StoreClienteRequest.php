@@ -105,6 +105,14 @@ class StoreClienteRequest extends FormRequest
                 'string',
                 'nullable',
             ],
+            'plano'                     => [
+                'string',
+                'nullable',
+            ],
+            'valor_plano'               => [
+                'string',
+                'nullable',
+            ],
             'prof_nome_da_empresa'      => [
                 'string',
                 'nullable',

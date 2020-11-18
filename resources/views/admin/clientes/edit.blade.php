@@ -256,6 +256,26 @@
                 <span class="help-block">{{ trans('cruds.cliente.fields.email_helper') }}</span>
             </div>
             <div class="form-group">
+                <label for="plano">{{ trans('cruds.cliente.fields.plano') }}</label>
+                <input class="form-control {{ $errors->has('plano') ? 'is-invalid' : '' }}" type="text" name="plano" id="plano" value="{{ old('plano', $cliente->plano) }}">
+                @if($errors->has('plano'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('plano') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.cliente.fields.plano_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="valor_plano">{{ trans('cruds.cliente.fields.valor_plano') }}</label>
+                <input class="form-control {{ $errors->has('valor_plano') ? 'is-invalid' : '' }}" type="text" name="valor_plano" id="valor_plano" value="{{ old('valor_plano', $cliente->valor_plano) }}">
+                @if($errors->has('valor_plano'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('valor_plano') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.cliente.fields.valor_plano_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <label for="prof_nome_da_empresa">{{ trans('cruds.cliente.fields.prof_nome_da_empresa') }}</label>
                 <input class="form-control {{ $errors->has('prof_nome_da_empresa') ? 'is-invalid' : '' }}" type="text" name="prof_nome_da_empresa" id="prof_nome_da_empresa" value="{{ old('prof_nome_da_empresa', $cliente->prof_nome_da_empresa) }}">
                 @if($errors->has('prof_nome_da_empresa'))
