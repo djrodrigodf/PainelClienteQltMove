@@ -156,6 +156,26 @@
                 <span class="help-block">{{ trans('cruds.cliente.fields.nome_do_conjuge_helper') }}</span>
             </div>
             <div class="form-group">
+                <label for="cpf_conjuge">{{ trans('cruds.cliente.fields.cpf_conjuge') }}</label>
+                <input class="form-control {{ $errors->has('cpf_conjuge') ? 'is-invalid' : '' }}" type="text" name="cpf_conjuge" id="cpf_conjuge" value="{{ old('cpf_conjuge', $cliente->cpf_conjuge) }}">
+                @if($errors->has('cpf_conjuge'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('cpf_conjuge') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.cliente.fields.cpf_conjuge_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="nasc_conjunge">{{ trans('cruds.cliente.fields.nasc_conjunge') }}</label>
+                <input class="form-control {{ $errors->has('nasc_conjunge') ? 'is-invalid' : '' }}" type="text" name="nasc_conjunge" id="nasc_conjunge" value="{{ old('nasc_conjunge', $cliente->nasc_conjunge) }}">
+                @if($errors->has('nasc_conjunge'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('nasc_conjunge') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.cliente.fields.nasc_conjunge_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <label for="endereco">{{ trans('cruds.cliente.fields.endereco') }}</label>
                 <input class="form-control {{ $errors->has('endereco') ? 'is-invalid' : '' }}" type="text" name="endereco" id="endereco" value="{{ old('endereco', $cliente->endereco) }}">
                 @if($errors->has('endereco'))

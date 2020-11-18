@@ -69,6 +69,14 @@ class UpdateClienteRequest extends FormRequest
                 'string',
                 'nullable',
             ],
+            'cpf_conjuge'               => [
+                'string',
+                'nullable',
+            ],
+            'nasc_conjunge'             => [
+                'string',
+                'nullable',
+            ],
             'endereco'                  => [
                 'string',
                 'nullable',

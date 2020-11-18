@@ -68,6 +68,12 @@
                             {{ trans('cruds.cliente.fields.nome_do_conjuge') }}
                         </th>
                         <th>
+                            {{ trans('cruds.cliente.fields.cpf_conjuge') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.cliente.fields.nasc_conjunge') }}
+                        </th>
+                        <th>
                             {{ trans('cruds.cliente.fields.endereco') }}
                         </th>
                         <th>
@@ -215,6 +221,12 @@
                             </td>
                             <td>
                                 {{ $cliente->nome_do_conjuge ?? '' }}
+                            </td>
+                            <td>
+                                {{ $cliente->cpf_conjuge ?? '' }}
+                            </td>
+                            <td>
+                                {{ $cliente->nasc_conjunge ?? '' }}
                             </td>
                             <td>
                                 {{ $cliente->endereco ?? '' }}
