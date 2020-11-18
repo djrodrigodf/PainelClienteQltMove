@@ -98,6 +98,12 @@
                             {{ trans('cruds.cliente.fields.email') }}
                         </th>
                         <th>
+                            {{ trans('cruds.cliente.fields.plano') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.cliente.fields.valor_plano') }}
+                        </th>
+                        <th>
                             {{ trans('cruds.cliente.fields.prof_nome_da_empresa') }}
                         </th>
                         <th>
@@ -239,6 +245,12 @@
                             </td>
                             <td>
                                 {{ $cliente->email ?? '' }}
+                            </td>
+                            <td>
+                                {{ $cliente->plano ?? '' }}
+                            </td>
+                            <td>
+                                {{ $cliente->valor_plano ?? '' }}
                             </td>
                             <td>
                                 {{ $cliente->prof_nome_da_empresa ?? '' }}

@@ -217,6 +217,22 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.cliente.fields.plano') }}
+                        </th>
+                        <td>
+                            {{ $cliente->plano }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.cliente.fields.valor_plano') }}
+                        </th>
+                        <td>
+                            {{ $cliente->valor_plano }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.cliente.fields.prof_nome_da_empresa') }}
                         </th>
                         <td>

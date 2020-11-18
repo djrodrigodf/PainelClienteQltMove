@@ -13,16 +13,11 @@ use Symfony\Component\HttpFoundation\Response;
 
 class UsersApiController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
-
-    //    ->when(! empty($request->get('email')), function ($query) use ($request) {
-    //    return $query->where('email', 'like', '%'.$request->get('email').'%');
-    //})
-
         abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $t = User::with(['roles'])->get();
-        return $t;
+
+        return new UserResource(User::with(['roles'])->get());
     }
 
     public function store(StoreUserRequest $request)

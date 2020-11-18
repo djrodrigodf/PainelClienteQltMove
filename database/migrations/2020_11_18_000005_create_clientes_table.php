@@ -51,6 +51,8 @@ class CreateClientesTable extends Migration
             $table->string('prof_outras_rendas')->nullable();
             $table->string('prof_forma_de_comprovacao')->nullable();
             $table->string('prof_patrimonio')->nullable();
+            $table->string('plano')->nullable();
+            $table->string('valor_plano')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
