@@ -51,6 +51,8 @@ class Cliente extends Model
         'def_fisico',
         'estado_civil',
         'nome_do_conjuge',
+        'cpf_conjuge',
+        'nasc_conjunge',
         'endereco',
         'complemento',
         'bairro',

@@ -53,6 +53,8 @@ class CreateClientesTable extends Migration
             $table->string('prof_patrimonio')->nullable();
             $table->string('plano')->nullable();
             $table->string('valor_plano')->nullable();
+            $table->string('cpf_conjuge')->nullable();
+            $table->string('nasc_conjunge')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

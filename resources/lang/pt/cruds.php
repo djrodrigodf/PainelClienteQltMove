@@ -169,6 +169,10 @@ return [
             'plano_helper'                     => ' ',
             'valor_plano'                      => 'Valor Plano',
             'valor_plano_helper'               => ' ',
+            'cpf_conjuge'                      => 'CPF',
+            'cpf_conjuge_helper'               => ' ',
+            'nasc_conjunge'                    => 'Nascimento',
+            'nasc_conjunge_helper'             => ' ',
         ],
     ],
     'referenciaPessoal'   => [

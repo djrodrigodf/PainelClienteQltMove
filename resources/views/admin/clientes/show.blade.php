@@ -137,6 +137,22 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.cliente.fields.cpf_conjuge') }}
+                        </th>
+                        <td>
+                            {{ $cliente->cpf_conjuge }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.cliente.fields.nasc_conjunge') }}
+                        </th>
+                        <td>
+                            {{ $cliente->nasc_conjunge }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.cliente.fields.endereco') }}
                         </th>
                         <td>
