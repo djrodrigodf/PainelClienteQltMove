@@ -42,6 +42,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Planos
     Route::delete('planos/destroy', 'PlanosController@massDestroy')->name('planos.massDestroy');
+    Route::post('planos/parse-csv-import', 'PlanosController@parseCsvImport')->name('planos.parseCsvImport');
+    Route::post('planos/process-csv-import', 'PlanosController@processCsvImport')->name('planos.processCsvImport');
     Route::resource('planos', 'PlanosController');
 
     Route::get('messenger', 'MessengerController@index')->name('messenger.index');

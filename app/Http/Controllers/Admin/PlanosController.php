@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Requests\MassDestroyPlanoRequest;
 use App\Http\Requests\StorePlanoRequest;
 use App\Http\Requests\UpdatePlanoRequest;
@@ -13,6 +14,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class PlanosController extends Controller
 {
+    use CsvImportTrait;
+
     public function index()
     {
         abort_if(Gate::denies('plano_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
