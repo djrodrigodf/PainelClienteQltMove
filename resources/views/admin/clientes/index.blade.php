@@ -26,149 +26,15 @@
                             {{ trans('cruds.cliente.fields.id') }}
                         </th>
                         <th>
-                            {{ trans('cruds.cliente.fields.nome_completo') }}
+                            Nome/CPF
                         </th>
                         <th>
-                            {{ trans('cruds.cliente.fields.cpf') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.cliente.fields.rg') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.cliente.fields.dt_emissao_rg') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.cliente.fields.dt_nasc') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.cliente.fields.cnh') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.cliente.fields.dt_validade_cnh') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.cliente.fields.nacionalidade') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.cliente.fields.nome_do_pai') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.cliente.fields.nome_da_mae') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.cliente.fields.grau_de_inst') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.cliente.fields.def_fisico') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.cliente.fields.estado_civil') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.cliente.fields.nome_do_conjuge') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.cliente.fields.cpf_conjuge') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.cliente.fields.nasc_conjunge') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.cliente.fields.endereco') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.cliente.fields.complemento') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.cliente.fields.bairro') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.cliente.fields.cidade') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.cliente.fields.estado') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.cliente.fields.cep') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.cliente.fields.tempo_de_residencia') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.cliente.fields.tel_resid') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.cliente.fields.tel_celular') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.cliente.fields.email') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.cliente.fields.plano') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.cliente.fields.valor_plano') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.cliente.fields.prof_nome_da_empresa') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.cliente.fields.prof_endereco_comercial') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.cliente.fields.prof_cnpj') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.cliente.fields.prof_bairro') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.cliente.fields.prof_cidade') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.cliente.fields.prof_estado') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.cliente.fields.prof_cep') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.cliente.fields.prof_tel_comercial') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.cliente.fields.prof_sede_propria') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.cliente.fields.prof_data_de_admissao') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.cliente.fields.prof_porte_da_empresa') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.cliente.fields.prof_cargo_funcao') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.cliente.fields.prof_ocupacao') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.cliente.fields.prof_renda_bruta') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.cliente.fields.prof_outras_rendas') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.cliente.fields.prof_forma_de_comprovacao') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.cliente.fields.prof_patrimonio') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.cliente.fields.referenia_pessoal') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.cliente.fields.referencia_bancaria') }}
+                            Plano
                         </th>
                         <th>
                             {{ trans('cruds.cliente.fields.status') }}
                         </th>
+                        <th>Data da Solicitação</th>
                         <th>
                             &nbsp;
                         </th>
@@ -185,149 +51,17 @@
                             </td>
                             <td>
                                 {{ $cliente->nome_completo ?? '' }}
+                                <br>
+                                <b><span class="small">{{ $cliente->cpf ?? '' }}</span></b>
                             </td>
                             <td>
-                                {{ $cliente->cpf ?? '' }}
-                            </td>
-                            <td>
-                                {{ $cliente->rg ?? '' }}
-                            </td>
-                            <td>
-                                {{ $cliente->dt_emissao_rg ?? '' }}
-                            </td>
-                            <td>
-                                {{ $cliente->dt_nasc ?? '' }}
-                            </td>
-                            <td>
-                                {{ $cliente->cnh ?? '' }}
-                            </td>
-                            <td>
-                                {{ $cliente->dt_validade_cnh ?? '' }}
-                            </td>
-                            <td>
-                                {{ $cliente->nacionalidade ?? '' }}
-                            </td>
-                            <td>
-                                {{ $cliente->nome_do_pai ?? '' }}
-                            </td>
-                            <td>
-                                {{ $cliente->nome_da_mae ?? '' }}
-                            </td>
-                            <td>
-                                {{ $cliente->grau_de_inst ?? '' }}
-                            </td>
-                            <td>
-                                {{ App\Models\Cliente::DEF_FISICO_SELECT[$cliente->def_fisico] ?? '' }}
-                            </td>
-                            <td>
-                                {{ $cliente->estado_civil ?? '' }}
-                            </td>
-                            <td>
-                                {{ $cliente->nome_do_conjuge ?? '' }}
-                            </td>
-                            <td>
-                                {{ $cliente->cpf_conjuge ?? '' }}
-                            </td>
-                            <td>
-                                {{ $cliente->nasc_conjunge ?? '' }}
-                            </td>
-                            <td>
-                                {{ $cliente->endereco ?? '' }}
-                            </td>
-                            <td>
-                                {{ $cliente->complemento ?? '' }}
-                            </td>
-                            <td>
-                                {{ $cliente->bairro ?? '' }}
-                            </td>
-                            <td>
-                                {{ $cliente->cidade ?? '' }}
-                            </td>
-                            <td>
-                                {{ $cliente->estado ?? '' }}
-                            </td>
-                            <td>
-                                {{ $cliente->cep ?? '' }}
-                            </td>
-                            <td>
-                                {{ $cliente->tempo_de_residencia ?? '' }}
-                            </td>
-                            <td>
-                                {{ $cliente->tel_resid ?? '' }}
-                            </td>
-                            <td>
-                                {{ $cliente->tel_celular ?? '' }}
-                            </td>
-                            <td>
-                                {{ $cliente->email ?? '' }}
-                            </td>
-                            <td>
-                                {{ $cliente->plano ?? '' }}
-                            </td>
-                            <td>
-                                {{ $cliente->valor_plano ?? '' }}
-                            </td>
-                            <td>
-                                {{ $cliente->prof_nome_da_empresa ?? '' }}
-                            </td>
-                            <td>
-                                {{ $cliente->prof_endereco_comercial ?? '' }}
-                            </td>
-                            <td>
-                                {{ $cliente->prof_cnpj ?? '' }}
-                            </td>
-                            <td>
-                                {{ $cliente->prof_bairro ?? '' }}
-                            </td>
-                            <td>
-                                {{ $cliente->prof_cidade ?? '' }}
-                            </td>
-                            <td>
-                                {{ $cliente->prof_estado ?? '' }}
-                            </td>
-                            <td>
-                                {{ $cliente->prof_cep ?? '' }}
-                            </td>
-                            <td>
-                                {{ $cliente->prof_tel_comercial ?? '' }}
-                            </td>
-                            <td>
-                                {{ App\Models\Cliente::PROF_SEDE_PROPRIA_SELECT[$cliente->prof_sede_propria] ?? '' }}
-                            </td>
-                            <td>
-                                {{ $cliente->prof_data_de_admissao ?? '' }}
-                            </td>
-                            <td>
-                                {{ $cliente->prof_porte_da_empresa ?? '' }}
-                            </td>
-                            <td>
-                                {{ $cliente->prof_cargo_funcao ?? '' }}
-                            </td>
-                            <td>
-                                {{ $cliente->prof_ocupacao ?? '' }}
-                            </td>
-                            <td>
-                                {{ $cliente->prof_renda_bruta ?? '' }}
-                            </td>
-                            <td>
-                                {{ $cliente->prof_outras_rendas ?? '' }}
-                            </td>
-                            <td>
-                                {{ $cliente->prof_forma_de_comprovacao ?? '' }}
-                            </td>
-                            <td>
-                                {{ $cliente->prof_patrimonio ?? '' }}
-                            </td>
-                            <td>
-                                @foreach($cliente->referenia_pessoals as $key => $item)
-                                    <span class="badge badge-info">{{ $item->nome_completo }}</span>
-                                @endforeach
-                            </td>
-                            <td>
-                                {{ $cliente->referencia_bancaria->banco_codigo ?? '' }}
+                                {!! \App\Models\Plano::meuPlano($cliente->plano) !!}
                             </td>
                             <td>
                                 {{ $cliente->status->status ?? '' }}
+                            </td>
+                            <td>
+                                {{ \Carbon\Carbon::parse($cliente->created_at)->format('d/m/Y H:i') ?? '' }}
                             </td>
                             <td>
                                 @can('cliente_show')
@@ -408,7 +142,7 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
+
 })
 
 </script>

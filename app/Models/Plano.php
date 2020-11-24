@@ -39,4 +39,10 @@ class Plano extends Model
     {
         return $date->format('Y-m-d H:i:s');
     }
+
+    public static function meuPlano($id) {
+        $plano = Plano::find($id);
+        $retorno = '<b>' . $plano->marca . '</b> <br>' . ' ' . $plano->veiculo . '<br>' . $plano->km . 'Km<br>' . 'Período: ' . $plano->periodo . ' meses';
+        return $retorno;
+    }
 }

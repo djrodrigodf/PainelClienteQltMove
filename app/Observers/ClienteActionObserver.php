@@ -10,19 +10,19 @@ class ClienteActionObserver
 {
     public function created(Cliente $model)
     {
-        $data  = ['action' => 'created', 'model_name' => 'Cliente'];
-        $users = \App\Models\User::whereHas('roles', function ($q) {
-            return $q->where('title', 'Admin');
-        })->get();
-        Notification::send($users, new DataChangeEmailNotification($data));
+        //$data  = ['action' => 'created', 'model_name' => 'Cliente'];
+        //$users = \App\Models\User::whereHas('roles', function ($q) {
+        //    return $q->where('title', 'Admin');
+        //})->get();
+        //Notification::send($users, new DataChangeEmailNotification($data));
     }
 
     public function updated(Cliente $model)
     {
-        $data  = ['action' => 'updated', 'model_name' => 'Cliente'];
-        $users = \App\Models\User::whereHas('roles', function ($q) {
-            return $q->where('title', 'Admin');
-        })->get();
-        Notification::send($users, new DataChangeEmailNotification($data));
+        //$data  = ['action' => 'updated', 'model_name' => 'Cliente'];
+        //$users = \App\Models\User::whereHas('roles', function ($q) {
+        //    return $q->where('title', 'Admin');
+        //})->get();
+        //Notification::send($users, new DataChangeEmailNotification($data));
     }
 }

@@ -21,6 +21,11 @@ table.dataTable tbody th.select-checkbox::after {
     margin-top: .2rem;
 }
 
+#showDetails .form-control:disabled {
+    background-color: transparent;
+    opacity: 1;
+}
+
 .dataTables_filter {
     margin-right: .2rem;
 }

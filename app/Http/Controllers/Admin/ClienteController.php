@@ -7,6 +7,7 @@ use App\Http\Requests\MassDestroyClienteRequest;
 use App\Http\Requests\StoreClienteRequest;
 use App\Http\Requests\UpdateClienteRequest;
 use App\Models\Cliente;
+use App\Models\Plano;
 use App\Models\ReferenciaBancarium;
 use App\Models\ReferenciaPessoal;
 use App\Models\StatusCliente;
@@ -33,15 +34,42 @@ class ClienteController extends Controller
 
         $referencia_bancarias = ReferenciaBancarium::all()->pluck('banco_codigo', 'id')->prepend(trans('global.pleaseSelect'), '');
 
+        $planos = Plano::groupBy('veiculo')->get();
+
         $statuses = StatusCliente::all()->pluck('status', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.clientes.create', compact('referenia_pessoals', 'referencia_bancarias', 'statuses'));
+        return view('admin.clientes.create', compact('referenia_pessoals', 'referencia_bancarias', 'statuses', 'planos'));
     }
 
     public function store(StoreClienteRequest $request)
     {
+        $dBancarios = [
+            'banco_codigo' => $request->ref_banco_codigo,
+            'agencia_codigo' => $request->ref_agencia,
+            'conta' => $request->ref_conta,
+            'tempo_de_conta' => $request->ref_tempo_conta,
+            'cartao_de_credito' => $request->ref_cartao_credito,
+        ];
+
+        $banco = ReferenciaBancarium::create($dBancarios);
+
+        $request['referencia_bancaria_id'] = $banco->id;
+
+        $itens = count($request->ref_nome) - 1;
+
+        $referenciaPessoal = [];
+        for ($i = 0; $i <= $itens; $i++) {
+            $RefPessoal = [
+                'nome_completo' => $request->ref_nome[$i],
+                'telefone' => $request->ref_telefone[$i],
+            ];
+            $referenciaP = ReferenciaPessoal::create($RefPessoal);
+            array_push($referenciaPessoal, $referenciaP->id);
+        }
+
+        $request['status_id'] = 1;
         $cliente = Cliente::create($request->all());
-        $cliente->referenia_pessoals()->sync($request->input('referenia_pessoals', []));
+        $cliente->referenia_pessoals()->sync($referenciaPessoal);
 
         return redirect()->route('admin.clientes.index');
     }
