@@ -7,6 +7,7 @@ use App\Http\Requests\MassDestroyClienteRequest;
 use App\Http\Requests\StoreClienteRequest;
 use App\Http\Requests\UpdateClienteRequest;
 use App\Models\Cliente;
+use App\Models\Plano;
 use App\Models\ReferenciaBancarium;
 use App\Models\ReferenciaPessoal;
 use Gate;
@@ -32,7 +33,9 @@ class ClienteController extends Controller
 
         $referencia_bancarias = ReferenciaBancarium::all()->pluck('banco_codigo', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.clientes.create', compact('referenia_pessoals', 'referencia_bancarias'));
+        $planos = Plano::groupBy('veiculo')->get();
+
+        return view('admin.clientes.create', compact('referenia_pessoals', 'referencia_bancarias', 'planos'));
     }
 
     public function store(StoreClienteRequest $request)

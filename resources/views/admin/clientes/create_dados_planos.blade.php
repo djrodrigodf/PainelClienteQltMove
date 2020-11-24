@@ -2,32 +2,33 @@
     <div class="card-header">
         <h3>Plano:</h3>
     </div>
+
     <div class="card-body">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
+
+
+
                 <div class="form-group">
-                    <label for="plano">{{ trans('cruds.cliente.fields.plano') }}</label>
-                    <input class="form-control {{ $errors->has('plano') ? 'is-invalid' : '' }}" type="text" name="plano" id="plano" value="{{ old('plano', '') }}">
-                    @if($errors->has('plano'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('plano') }}
-                        </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.cliente.fields.plano_helper') }}</span>
+                    <label for="ref_banco_codigo">Veiculo</label>
+                    <select class="form-control select2" name="plano_nome" id="plano_nome">
+                        <option value="">Selecione</option>
+                        @foreach($planos as $plano)
+                            <option value="{{$plano->veiculo}}">{{$plano->veiculo}}</option>
+                        @endforeach
+
+                    </select>
                 </div>
+
+                @include('admin.clientes.listPlanos')
             </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="valor_plano">{{ trans('cruds.cliente.fields.valor_plano') }}</label>
-                    <input class="form-control {{ $errors->has('valor_plano') ? 'is-invalid' : '' }}" type="text" name="valor_plano" id="valor_plano" value="{{ old('valor_plano', '') }}">
-                    @if($errors->has('valor_plano'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('valor_plano') }}
-                        </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.cliente.fields.valor_plano_helper') }}</span>
-                </div>
-            </div>
+        </div>
+    </div>
+
+    <div class="card-body">
+        <div class="row">
+            <input class="form-control {{ $errors->has('plano') ? 'is-invalid' : '' }}" type="hidden" name="plano" id="plano" value="{{ old('plano', '') }}">
+            <input class="form-control {{ $errors->has('valor_plano') ? 'is-invalid' : '' }} dinheiro" type="hidden" name="valor_plano" id="valor_plano" value="{{ old('valor_plano', '') }}">
         </div>
     </div>
 </div>
