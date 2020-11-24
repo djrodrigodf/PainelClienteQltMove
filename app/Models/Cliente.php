@@ -84,6 +84,7 @@ class Cliente extends Model
         'prof_patrimonio',
         'referencia_bancaria_id',
         'created_at',
+        'status_id',
         'updated_at',
         'deleted_at',
         'created_by_id',
@@ -148,6 +149,11 @@ class Cliente extends Model
     public function referencia_bancaria()
     {
         return $this->belongsTo(ReferenciaBancarium::class, 'referencia_bancaria_id');
+    }
+
+    public function status()
+    {
+        return $this->belongsTo(StatusCliente::class, 'status_id');
     }
 
     public function created_by()

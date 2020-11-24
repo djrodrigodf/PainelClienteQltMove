@@ -164,6 +164,26 @@ class PermissionsTableSeeder extends Seeder
             ],
             [
                 'id'    => 39,
+                'title' => 'status_cliente_create',
+            ],
+            [
+                'id'    => 40,
+                'title' => 'status_cliente_edit',
+            ],
+            [
+                'id'    => 41,
+                'title' => 'status_cliente_show',
+            ],
+            [
+                'id'    => 42,
+                'title' => 'status_cliente_delete',
+            ],
+            [
+                'id'    => 43,
+                'title' => 'status_cliente_access',
+            ],
+            [
+                'id'    => 44,
                 'title' => 'profile_password_edit',
             ],
         ];

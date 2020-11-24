@@ -107,6 +107,16 @@
                 </a>
             </li>
         @endcan
+        @can('status_cliente_access')
+            <li class="c-sidebar-nav-item">
+                <a href="{{ route("admin.status-clientes.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/status-clientes") || request()->is("admin/status-clientes/*") ? "c-active" : "" }}">
+                    <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
+
+                    </i>
+                    {{ trans('cruds.statusCliente.title') }}
+                </a>
+            </li>
+        @endcan
         @php($unread = \App\Models\QaTopic::unreadCount())
             <li class="c-sidebar-nav-item">
                 <a href="{{ route("admin.messenger.index") }}" class="{{ request()->is("admin/messenger") || request()->is("admin/messenger/*") ? "c-active" : "" }} c-sidebar-nav-link">

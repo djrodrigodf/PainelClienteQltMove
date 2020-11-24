@@ -167,6 +167,9 @@
                             {{ trans('cruds.cliente.fields.referencia_bancaria') }}
                         </th>
                         <th>
+                            {{ trans('cruds.cliente.fields.status') }}
+                        </th>
+                        <th>
                             &nbsp;
                         </th>
                     </tr>
@@ -322,6 +325,9 @@
                             </td>
                             <td>
                                 {{ $cliente->referencia_bancaria->banco_codigo ?? '' }}
+                            </td>
+                            <td>
+                                {{ $cliente->status->status ?? '' }}
                             </td>
                             <td>
                                 @can('cliente_show')

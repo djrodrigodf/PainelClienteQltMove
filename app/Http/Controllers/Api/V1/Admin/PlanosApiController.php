@@ -53,25 +53,4 @@ class PlanosApiController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
-    public function findPlano(Request $request) {
-        if ($request->groupKm && $request->kmSelected) {
-            $planos = Plano::where('veiculo', $request->filterPlano)->where('km', $request->kmSelected)->get();
-            return $planos;
-        }
-
-        if ($request->groupKm) {
-            $planos = Plano::where('veiculo', $request->filterPlano)->groupBy('km')->get();
-            return $planos;
-        }
-
-        $planos = Plano::where('veiculo', $request->filterPlano)->get();
-        return $planos;
-
-    }
-
-    public function findIdPlano(Request $request) {
-        $planos = Plano::find($request->idPlano);
-        return $planos;
-    }
 }

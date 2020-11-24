@@ -13,6 +13,8 @@ class AddRelationshipFieldsToClientesTable extends Migration
             $table->foreign('referencia_bancaria_id', 'referencia_bancaria_fk_2602788')->references('id')->on('referencia_bancaria');
             $table->unsignedBigInteger('created_by_id')->nullable();
             $table->foreign('created_by_id', 'created_by_fk_2602796')->references('id')->on('users');
+            $table->unsignedBigInteger('status_id')->nullable();
+            $table->foreign('status_id', 'status_fk_2653498')->references('id')->on('status_clientes');
         });
     }
 }

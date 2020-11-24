@@ -7,9 +7,9 @@ use App\Http\Requests\MassDestroyClienteRequest;
 use App\Http\Requests\StoreClienteRequest;
 use App\Http\Requests\UpdateClienteRequest;
 use App\Models\Cliente;
-use App\Models\Plano;
 use App\Models\ReferenciaBancarium;
 use App\Models\ReferenciaPessoal;
+use App\Models\StatusCliente;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -33,9 +33,9 @@ class ClienteController extends Controller
 
         $referencia_bancarias = ReferenciaBancarium::all()->pluck('banco_codigo', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $planos = Plano::groupBy('veiculo')->get();
+        $statuses = StatusCliente::all()->pluck('status', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.clientes.create', compact('referenia_pessoals', 'referencia_bancarias', 'planos'));
+        return view('admin.clientes.create', compact('referenia_pessoals', 'referencia_bancarias', 'statuses'));
     }
 
     public function store(StoreClienteRequest $request)
@@ -54,9 +54,11 @@ class ClienteController extends Controller
 
         $referencia_bancarias = ReferenciaBancarium::all()->pluck('banco_codigo', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $cliente->load('referenia_pessoals', 'referencia_bancaria', 'created_by');
+        $statuses = StatusCliente::all()->pluck('status', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.clientes.edit', compact('referenia_pessoals', 'referencia_bancarias', 'cliente'));
+        $cliente->load('referenia_pessoals', 'referencia_bancaria', 'status', 'created_by');
+
+        return view('admin.clientes.edit', compact('referenia_pessoals', 'referencia_bancarias', 'statuses', 'cliente'));
     }
 
     public function update(UpdateClienteRequest $request, Cliente $cliente)
@@ -71,7 +73,7 @@ class ClienteController extends Controller
     {
         abort_if(Gate::denies('cliente_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $cliente->load('referenia_pessoals', 'referencia_bancaria', 'created_by');
+        $cliente->load('referenia_pessoals', 'referencia_bancaria', 'status', 'created_by');
 
         return view('admin.clientes.show', compact('cliente'));
     }

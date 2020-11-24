@@ -14,11 +14,6 @@ table.dataTable tbody th.select-checkbox::after {
     top: 50%;
 }
 
-#showDetails .form-control:disabled {
-    background-color: transparent;
-    opacity: 1;
-}
-
 .dataTables_length,
 .dataTables_filter,
 .dt-buttons {
