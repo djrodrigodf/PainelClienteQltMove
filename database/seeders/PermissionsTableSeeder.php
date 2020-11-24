@@ -144,6 +144,26 @@ class PermissionsTableSeeder extends Seeder
             ],
             [
                 'id'    => 34,
+                'title' => 'plano_create',
+            ],
+            [
+                'id'    => 35,
+                'title' => 'plano_edit',
+            ],
+            [
+                'id'    => 36,
+                'title' => 'plano_show',
+            ],
+            [
+                'id'    => 37,
+                'title' => 'plano_delete',
+            ],
+            [
+                'id'    => 38,
+                'title' => 'plano_access',
+            ],
+            [
+                'id'    => 39,
                 'title' => 'profile_password_edit',
             ],
         ];

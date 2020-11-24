@@ -3,11 +3,6 @@ textarea {
     min-height: 150px;
 }
 
-#showDetails .form-control:disabled {
-    background-color: transparent;
-    opacity: 1;
-}
-
 .datatable {
     width: 100% !important;
 }
