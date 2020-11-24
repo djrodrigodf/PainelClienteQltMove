@@ -1,8 +1,8 @@
 @extends('layouts.admin')
 @section('content')
 
-    <div class="card-header text-center">
-        <h1>Ficha do Cliente -  {{ $cliente->id }}</h1>
+    <div class="card-header">
+        <h1>{{ $cliente->nome_completo }} -  {{ $cliente->cpf }}</h1>
     </div>
 
     <div id="showDetails">
