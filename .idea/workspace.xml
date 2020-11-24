@@ -3,18 +3,15 @@
   <component name="ChangeListManager">
     <list default="true" id="a405b316-83d7-49f5-aa70-b3b3a163f555" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/ClienteController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/ClienteController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/V1/Admin/ClienteApiController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/V1/Admin/ClienteApiController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Observers/ClienteActionObserver.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Observers/ClienteActionObserver.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/mix-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/mix-manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/ExampleComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/ExampleComponent.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/lang/pt/cruds.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/pt/cruds.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/custom.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/custom.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/admin/clientes/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/clientes/create.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webpack.mix.js" beforeDir="false" afterPath="$PROJECT_DIR$/webpack.mix.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/clientes/create_dados_bancarias.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/clientes/create_dados_bancarias.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/clientes/create_dados_cliente.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/clientes/create_dados_cliente.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/clientes/create_dados_endereco.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/clientes/create_dados_endereco.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/clientes/create_dados_profissionais.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/clientes/create_dados_profissionais.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/clientes/create_dados_referencias.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/clientes/create_dados_referencias.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/clientes/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/clientes/show.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/admin.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/admin.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,6 +21,13 @@
   <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
     <execution />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -183,6 +187,7 @@
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\laragon\www\PainelClienteQltMove\resources\views\admin\clientes" />
+      <recent name="D:\laragon\www\PainelClienteQltMove\public\js" />
     </key>
   </component>
   <component name="RunManager">
@@ -203,7 +208,11 @@
       <workItem from="1605620958465" duration="8000" />
       <workItem from="1605647118295" duration="13000" />
       <workItem from="1605720650727" duration="1460000" />
-      <workItem from="1605722132885" duration="8140000" />
+      <workItem from="1605722132885" duration="11061000" />
+      <workItem from="1605794382486" duration="7964000" />
+      <workItem from="1605820465809" duration="218000" />
+      <workItem from="1605820769497" duration="780000" />
+      <workItem from="1605894068576" duration="600000" />
     </task>
     <servers />
   </component>
@@ -215,6 +224,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="122" y="241" width="998" height="708" key="SettingsEditor/0.0.1920.1040/1920.0.2560.1040@0.0.1920.1040" timestamp="1605722810421" />
+    <state x="848" y="182" width="583" height="624" key="find.popup" timestamp="1605809353132">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="848" y="182" width="583" height="624" key="find.popup/0.0.1920.1040/1920.0.2560.1040@0.0.1920.1040" timestamp="1605809353132" />
     <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1605588087552">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

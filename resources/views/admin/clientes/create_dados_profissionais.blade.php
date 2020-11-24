@@ -33,7 +33,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="prof_cep">{{ trans('cruds.cliente.fields.prof_cep') }}</label>
-                    <input class="form-control {{ $errors->has('prof_cep') ? 'is-invalid' : '' }}" type="text" name="prof_cep" id="prof_cep" value="{{ old('prof_cep', '') }}">
+                    <input class="form-control {{ $errors->has('prof_cep') ? 'is-invalid' : '' }} Maskcep" type="text" name="prof_cep" id="prof_cep" value="{{ old('prof_cep', '') }}">
                     @if($errors->has('prof_cep'))
                         <div class="invalid-feedback">
                             {{ $errors->first('prof_cep') }}
@@ -45,7 +45,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="prof_estado">{{ trans('cruds.cliente.fields.prof_estado') }}</label>
-                    <input class="form-control {{ $errors->has('prof_estado') ? 'is-invalid' : '' }}" type="text" name="prof_estado" id="prof_estado" value="{{ old('prof_estado', '') }}">
+                    <input readonly class="form-control {{ $errors->has('prof_estado') ? 'is-invalid' : '' }}" type="text" name="prof_estado" id="prof_estado" value="{{ old('prof_estado', '') }}">
                     @if($errors->has('prof_estado'))
                         <div class="invalid-feedback">
                             {{ $errors->first('prof_estado') }}
@@ -59,7 +59,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="prof_bairro">{{ trans('cruds.cliente.fields.prof_bairro') }}</label>
-                    <input class="form-control {{ $errors->has('prof_bairro') ? 'is-invalid' : '' }}" type="text" name="prof_bairro" id="prof_bairro" value="{{ old('prof_bairro', '') }}">
+                    <input readonly class="form-control {{ $errors->has('prof_bairro') ? 'is-invalid' : '' }}" type="text" name="prof_bairro" id="prof_bairro" value="{{ old('prof_bairro', '') }}">
                     @if($errors->has('prof_bairro'))
                         <div class="invalid-feedback">
                             {{ $errors->first('prof_bairro') }}
@@ -71,7 +71,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="prof_cidade">{{ trans('cruds.cliente.fields.prof_cidade') }}</label>
-                    <input class="form-control {{ $errors->has('prof_cidade') ? 'is-invalid' : '' }}" type="text" name="prof_cidade" id="prof_cidade" value="{{ old('prof_cidade', '') }}">
+                    <input readonly class="form-control {{ $errors->has('prof_cidade') ? 'is-invalid' : '' }}" type="text" name="prof_cidade" id="prof_cidade" value="{{ old('prof_cidade', '') }}">
                     @if($errors->has('prof_cidade'))
                         <div class="invalid-feedback">
                             {{ $errors->first('prof_cidade') }}
@@ -99,7 +99,7 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="prof_tel_comercial">{{ trans('cruds.cliente.fields.prof_tel_comercial') }}</label>
-                    <input class="form-control {{ $errors->has('prof_tel_comercial') ? 'is-invalid' : '' }}" type="text" name="prof_tel_comercial" id="prof_tel_comercial" value="{{ old('prof_tel_comercial', '') }}">
+                    <input class="form-control {{ $errors->has('prof_tel_comercial') ? 'is-invalid' : '' }} foneDD" type="text" name="prof_tel_comercial" id="prof_tel_comercial" value="{{ old('prof_tel_comercial', '') }}">
                     @if($errors->has('prof_tel_comercial'))
                         <div class="invalid-feedback">
                             {{ $errors->first('prof_tel_comercial') }}
@@ -233,3 +233,87 @@
     </div>
 </div>
 
+@section('scripts')
+    @parent
+
+    <script src="{{asset('js/validCnpj.js')}}"></script>
+
+    <script>
+        $('.Maskcep').mask('00000-000');
+        $('#prof_cnpj').mask('00.000.000/0000-00');
+        $('#prof_cnpj').focusout(function() {
+            var val = $('#prof_cnpj').val();
+            if (!validarCNPJ(val)) {
+                $('#prof_cnpj').val('');
+            }
+        })
+    </script>
+
+    <script>
+
+        $(document).ready(function() {
+            function limpa_formulário_cep() {
+                // Limpa valores do formulário de cep.
+                $("#prof_endereco_comercial").val("");
+                $("#prof_bairro").val("");
+                $("#prof_cidade").val("");
+                $("#prof_estado").val("");
+                $("#ibge").val("");
+            }
+
+            //Quando o campo cep perde o foco.
+            $("#prof_cep").blur(function() {
+
+                //Nova variável "cep" somente com dígitos.
+                var cep = $(this).val().replace(/\D/g, '');
+
+                //Verifica se campo cep possui valor informado.
+                if (cep != "") {
+
+                    //Expressão regular para validar o CEP.
+                    var validacep = /^[0-9]{8}$/;
+
+                    //Valida o formato do CEP.
+                    if(validacep.test(cep)) {
+
+                        //Preenche os campos com "..." enquanto consulta webservice.
+                        $("#prof_endereco_comercial").val("...");
+                        $("#prof_bairro").val("...");
+                        $("#prof_cidade").val("...");
+                        $("#prof_estado").val("...");
+                        $("#ibge").val("...");
+
+                        //Consulta o webservice viacep.com.br/
+                        $.getJSON("https://viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
+
+                            if (!("erro" in dados)) {
+                                //Atualiza os campos com os valores da consulta.
+                                $("#prof_endereco_comercial").val(dados.logradouro);
+                                $("#prof_bairro").val(dados.bairro);
+                                $("#prof_cidade").val(dados.localidade);
+                                $("#prof_estado").val(dados.uf);
+                                $("#ibge").val(dados.ibge);
+                            } //end if.
+                            else {
+                                //CEP pesquisado não foi encontrado.
+                                limpa_formulário_cep();
+                                alert("CEP não encontrado.");
+                            }
+                        });
+                    } //end if.
+                    else {
+                        //cep é inválido.
+                        limpa_formulário_cep();
+                        alert("Formato de CEP inválido.");
+                    }
+                } //end if.
+                else {
+                    //cep sem valor, limpa formulário.
+                    limpa_formulário_cep();
+                }
+            });
+        });
+
+    </script>
+
+@endsection

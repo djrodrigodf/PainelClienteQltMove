@@ -7,13 +7,13 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="ref_nome">Nome Completo</label>
-                    <input class="form-control" type="text" name="ref_nome[]" id="ref_nome" value="">
+                    <input class="form-control" type="text" name="ref_nome[]" id="ref_nome1" value="">
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="ref_telefone">Telefone</label>
-                    <input class="form-control" type="text" name="ref_telefone[]" id="ref_telefone" value="">
+                    <input class="form-control tel" type="text" name="ref_telefone[]" id="ref_telefone1" value="">
                 </div>
             </div>
         </div>
@@ -21,13 +21,13 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="ref_nome">Nome Completo</label>
-                    <input class="form-control" type="text" name="ref_nome[]" id="ref_nome" value="">
+                    <input class="form-control" type="text" name="ref_nome[]" id="ref_nome2" value="">
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="ref_telefone">Telefone</label>
-                    <input class="form-control" type="text" name="ref_telefone[]" id="ref_telefone" value="">
+                    <input class="form-control tel" type="text" name="ref_telefone[]" id="ref_telefone2" value="">
                 </div>
             </div>
         </div>

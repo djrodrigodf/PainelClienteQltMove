@@ -21,7 +21,7 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="cpf">{{ trans('cruds.cliente.fields.cpf') }}</label>
-                    <input class="form-control {{ $errors->has('cpf') ? 'is-invalid' : '' }}" type="text" name="cpf" id="cpf" value="{{ old('cpf', '') }}">
+                    <input class="form-control validate {{ $errors->has('cpf') ? 'is-invalid' : '' }}" type="text" name="cpf" id="cpf" value="{{ old('cpf', '') }}">
                     @if($errors->has('cpf'))
                         <div class="invalid-feedback">
                             {{ $errors->first('cpf') }}
@@ -228,3 +228,46 @@
         </div>
     </div>
 </div>
+
+
+@section('scripts')
+    @parent
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script type="text/javascript">
+
+        var SPMaskBehavior = function (val) {
+                return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
+            },
+            spOptions = {
+                onKeyPress: function(val, e, field, options) {
+                    field.mask(SPMaskBehavior.apply({}, arguments), options);
+                }
+            };
+
+        $('.tel').mask(SPMaskBehavior, spOptions);
+
+        $('#cpf').mask('000.000.000-00');
+        $('#cpf_conjuge').mask('000.000.000-00');
+
+
+    </script>
+
+    <script src="{{asset('js/validCpf.js')}}"></script>
+
+    <script>
+        $('#cpf').focusout(function() {
+            var val = $('#cpf').val();
+            if (!validarCPF(val)) {
+                $('#cpf').val('');
+            }
+        })
+
+        $('#cpf_conjuge').focusout(function() {
+            var val = $('#cpf_conjuge').val();
+            if (!validarCPF(val)) {
+                $('#cpf_conjuge').val('');
+            }
+        })
+    </script>
+
+@endsection
