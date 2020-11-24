@@ -17,7 +17,7 @@ class ClienteApiController extends Controller
     {
         abort_if(Gate::denies('cliente_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new ClienteResource(Cliente::with(['referenia_pessoals', 'referencia_bancaria', 'created_by'])->get());
+        return new ClienteResource(Cliente::with(['referenia_pessoals', 'referencia_bancaria', 'status', 'created_by'])->get());
     }
 
     public function store(StoreClienteRequest $request)
@@ -34,7 +34,7 @@ class ClienteApiController extends Controller
     {
         abort_if(Gate::denies('cliente_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new ClienteResource($cliente->load(['referenia_pessoals', 'referencia_bancaria', 'created_by']));
+        return new ClienteResource($cliente->load(['referenia_pessoals', 'referencia_bancaria', 'status', 'created_by']));
     }
 
     public function update(UpdateClienteRequest $request, Cliente $cliente)

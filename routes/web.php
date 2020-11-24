@@ -46,6 +46,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('planos/process-csv-import', 'PlanosController@processCsvImport')->name('planos.processCsvImport');
     Route::resource('planos', 'PlanosController');
 
+    // Status Clientes
+    Route::delete('status-clientes/destroy', 'StatusClienteController@massDestroy')->name('status-clientes.massDestroy');
+    Route::resource('status-clientes', 'StatusClienteController');
+
     Route::get('messenger', 'MessengerController@index')->name('messenger.index');
     Route::get('messenger/create', 'MessengerController@createTopic')->name('messenger.createTopic');
     Route::post('messenger', 'MessengerController@storeTopic')->name('messenger.storeTopic');

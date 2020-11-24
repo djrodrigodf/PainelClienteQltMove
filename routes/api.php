@@ -21,9 +21,7 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
 
     // Planos
     Route::apiResource('planos', 'PlanosApiController');
-});
 
-Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin'], function () {
-    Route::post('filterPlano', 'PlanosApiController@findPlano')->name('filterplano');
-    Route::post('findIdPlano', 'PlanosApiController@findPlano')->name('findidplano');
+    // Status Clientes
+    Route::apiResource('status-clientes', 'StatusClienteApiController');
 });
