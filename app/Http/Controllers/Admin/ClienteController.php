@@ -37,33 +37,8 @@ class ClienteController extends Controller
 
     public function store(StoreClienteRequest $request)
     {
-
-        $dBancarios = [
-            'banco_codigo' => $request->ref_banco_codigo,
-            'agencia_codigo' => $request->ref_agencia,
-            'conta' => $request->ref_conta,
-            'tempo_de_conta' => $request->ref_tempo_conta,
-            'cartao_de_credito' => $request->ref_cartao_credito,
-        ];
-
-        $banco = ReferenciaBancarium::create($dBancarios);
-
-        $request['referencia_bancaria_id'] = $banco->id;
-
-        $itens = count($request->ref_nome) - 1;
-
-        $referenciaPessoal = [];
-        for ($i = 0; $i <= $itens; $i++) {
-            $RefPessoal = [
-                'nome_completo' => $request->ref_nome[$i],
-                'telefone' => $request->ref_telefone[$i],
-            ];
-            $referenciaP = ReferenciaPessoal::create($RefPessoal);
-            array_push($referenciaPessoal, $referenciaP->id);
-        }
-
         $cliente = Cliente::create($request->all());
-        $cliente->referenia_pessoals()->sync($referenciaPessoal);
+        $cliente->referenia_pessoals()->sync($request->input('referenia_pessoals', []));
 
         return redirect()->route('admin.clientes.index');
     }

@@ -97,6 +97,16 @@
                 </a>
             </li>
         @endcan
+        @can('plano_access')
+            <li class="c-sidebar-nav-item">
+                <a href="{{ route("admin.planos.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/planos") || request()->is("admin/planos/*") ? "c-active" : "" }}">
+                    <i class="fa-fw fas fa-book-open c-sidebar-nav-icon">
+
+                    </i>
+                    {{ trans('cruds.plano.title') }}
+                </a>
+            </li>
+        @endcan
         @php($unread = \App\Models\QaTopic::unreadCount())
             <li class="c-sidebar-nav-item">
                 <a href="{{ route("admin.messenger.index") }}" class="{{ request()->is("admin/messenger") || request()->is("admin/messenger/*") ? "c-active" : "" }} c-sidebar-nav-link">
