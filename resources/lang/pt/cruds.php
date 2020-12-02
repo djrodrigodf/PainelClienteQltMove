@@ -66,8 +66,8 @@ return [
         ],
     ],
     'cliente'             => [
-        'title'          => 'Cliente',
-        'title_singular' => 'Cliente',
+        'title'          => 'Proposta',
+        'title_singular' => 'Proposta',
         'fields'         => [
             'id'                               => 'ID',
             'id_helper'                        => ' ',
