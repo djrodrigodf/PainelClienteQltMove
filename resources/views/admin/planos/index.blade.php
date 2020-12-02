@@ -30,6 +30,9 @@
                             {{ trans('cruds.plano.fields.id') }}
                         </th>
                         <th>
+                            Foto
+                        </th>
+                        <th>
                             {{ trans('cruds.plano.fields.marca') }}
                         </th>
                         <th>
@@ -69,6 +72,12 @@
                             </td>
                             <td>
                                 {{ $plano->id ?? '' }}
+                            </td>
+                            <td>
+                                @if ($plano->foto)
+                                    <img src="{{url('storage\\' . $plano->foto)}}" width="100px" alt="">
+                                @endif
+
                             </td>
                             <td>
                                 {{ $plano->marca ?? '' }}
@@ -176,7 +185,7 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
+
 })
 
 </script>

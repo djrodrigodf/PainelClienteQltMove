@@ -30,6 +30,7 @@ class Plano extends Model
         'r_um',
         'r_dois',
         'r_tres',
+        'foto',
         'created_at',
         'updated_at',
         'deleted_at',

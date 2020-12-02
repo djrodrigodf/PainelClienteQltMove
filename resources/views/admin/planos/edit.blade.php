@@ -100,6 +100,16 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.plano.fields.r_tres_helper') }}</span>
             </div>
+
+            <div class="form-group">
+                <label for="foto">Foto Veiculo</label>
+                <div class="custom-file">
+
+                    <input type="file" name="image" class="custom-file-input" id="foto">
+                    <label class="custom-file-label" for="foto">Selecione uma foto do Veiculo</label>
+                </div>
+            </div>
+
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
@@ -110,5 +120,16 @@
 </div>
 
 
+
+@endsection
+
+@section('scripts')
+
+    <script>
+        $(".custom-file-input").on("change", function() {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+    </script>
 
 @endsection

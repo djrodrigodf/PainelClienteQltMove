@@ -5,10 +5,7 @@
 
     <div class="card-body">
         <div class="row">
-            <div class="col-md-12">
-
-
-
+            <div class="col-md-7">
                 <div class="form-group">
                     <label for="ref_banco_codigo">Veiculo</label>
                     <select class="form-control select2" name="plano_nome" id="plano_nome">
@@ -16,11 +13,11 @@
                         @foreach($planos as $plano)
                             <option value="{{$plano->veiculo}}">{{$plano->veiculo}}</option>
                         @endforeach
-
                     </select>
                 </div>
-
                 @include('admin.clientes.listPlanos')
+            </div>
+            <div class="col-md-5 detalhes-plano">
             </div>
         </div>
     </div>

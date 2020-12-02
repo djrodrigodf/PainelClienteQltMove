@@ -36,6 +36,14 @@ class PlanosController extends Controller
     {
         $plano = Plano::create($request->all());
 
+        $extension = $request->image->getClientOriginalExtension();
+        $name = uniqid();
+        $nameFile = "{$name}.{$extension}";
+        $upload = $request->image->storeAs("public\\veiculos\\$plano->id", $nameFile);
+        $plano->foto = "veiculos\\$plano->id\\$nameFile";
+        $plano->save();
+
+
         return redirect()->route('admin.planos.index');
     }
 
@@ -48,8 +56,12 @@ class PlanosController extends Controller
 
     public function update(UpdatePlanoRequest $request, Plano $plano)
     {
+        $extension = $request->image->getClientOriginalExtension();
+        $name = uniqid();
+        $nameFile = "{$name}.{$extension}";
+        $upload = $request->image->storeAs("public\\veiculos\\$plano->id", $nameFile);
+        $request['foto'] = "veiculos\\$plano->id\\$nameFile";
         $plano->update($request->all());
-
         return redirect()->route('admin.planos.index');
     }
 

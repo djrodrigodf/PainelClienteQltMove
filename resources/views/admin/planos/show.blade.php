@@ -24,6 +24,14 @@
                         </td>
                     </tr>
                     <tr>
+                        <th>Foto</th>
+                        <td>
+                            @if ($plano->foto)
+                                <img src="{{url('storage\\' . $plano->foto)}}" width="100px" alt="">
+                            @endif
+                        </td>
+                    </tr>
+                    <tr>
                         <th>
                             {{ trans('cruds.plano.fields.marca') }}
                         </th>
