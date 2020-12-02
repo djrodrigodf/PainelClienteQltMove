@@ -27,7 +27,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Clientes
     Route::delete('clientes/destroy', 'ClienteController@massDestroy')->name('clientes.massDestroy');
+
     Route::resource('clientes', 'ClienteController');
+    Route::post('clientes-filter', 'ClienteController@index')->name('clientes.filter');
+    Route::get('clientes/aprovar/{id}', 'ClienteController@aprovar')->name('clientes.aprovar');
+    Route::get('clientes/reprovar/{id}', 'ClienteController@reprovar')->name('clientes.reprovar');
 
     // Referencia Pessoals
     Route::delete('referencia-pessoals/destroy', 'ReferenciaPessoalController@massDestroy')->name('referencia-pessoals.massDestroy');
@@ -45,6 +49,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('planos/parse-csv-import', 'PlanosController@parseCsvImport')->name('planos.parseCsvImport');
     Route::post('planos/process-csv-import', 'PlanosController@processCsvImport')->name('planos.processCsvImport');
     Route::resource('planos', 'PlanosController');
+
+    Route::resource('propostas', 'PropostaController');
+    Route::post('proposta/aprovar', 'PropostaController@aprovar')->name('aprovar_proposta');
+    Route::post('proposta/reprovar', 'PropostaController@reprovar')->name('reprovar_proposta');
 
     // Status Clientes
     Route::delete('status-clientes/destroy', 'StatusClienteController@massDestroy')->name('status-clientes.massDestroy');

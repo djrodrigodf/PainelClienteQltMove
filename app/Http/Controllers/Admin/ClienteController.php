@@ -8,6 +8,7 @@ use App\Http\Requests\StoreClienteRequest;
 use App\Http\Requests\UpdateClienteRequest;
 use App\Models\Cliente;
 use App\Models\Plano;
+use App\Models\Proposta;
 use App\Models\ReferenciaBancarium;
 use App\Models\ReferenciaPessoal;
 use App\Models\StatusCliente;
@@ -17,13 +18,25 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ClienteController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         abort_if(Gate::denies('cliente_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $clientes = Cliente::all();
+        $propostas = Proposta::with(['criado_por', 'cliente', 'plano'])->get();
 
-        return view('admin.clientes.index', compact('clientes'));
+        $status = StatusCliente::get();
+        $clientes = Cliente::all();
+        $select = null;
+        if ($request->filtro_status) {
+            $status = StatusCliente::get();
+            $propostas = Proposta::with(['criado_por', 'cliente', 'plano'])->where('status_id', $request->filtro_status)->get();
+            $clientes = Cliente::where('status_id', $request->filtro_status)->get();
+            $select = $request->filtro_status;
+
+            return view('admin.clientes.index', compact('clientes', 'status', 'select', 'propostas'));
+        }
+
+        return view('admin.clientes.index', compact('clientes', 'status', 'select', 'propostas'));
     }
 
     public function create()
@@ -71,7 +84,19 @@ class ClienteController extends Controller
         $cliente = Cliente::create($request->all());
         $cliente->referenia_pessoals()->sync($referenciaPessoal);
 
-        return redirect()->route('admin.clientes.index');
+        if ($cliente->id) {
+            $proposta = new Proposta();
+            $proposta->valor_plano = $request->valor_plano;
+            $proposta->cliente_id = $cliente->id;
+            $proposta->plano_id = (int)$cliente->plano;
+            $proposta->status_id = 1;
+            $proposta->criado_por = auth()->id();
+            $proposta->save();
+
+            return redirect()->route('admin.clientes.index');
+        }
+
+
     }
 
     public function edit(Cliente $cliente)
@@ -120,5 +145,20 @@ class ClienteController extends Controller
         Cliente::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    public function aprovar($id) {
+       $cliente = Cliente::find($id);
+       $cliente->status_id = 3;
+       $cliente->save();
+
+       return redirect()->route('admin.clientes.index');
+    }
+    public function reprovar($id) {
+        $cliente = Cliente::find($id);
+        $cliente->status_id = 2;
+        $cliente->save();
+
+        return redirect()->route('admin.clientes.index');
     }
 }

@@ -1,11 +1,6 @@
 @extends('layouts.admin')
 @section('content')
 
-    <div class="card-header text-center">
-        <h1>Ficha do Cliente</h1>
-    </div>
-
-
     <form method="POST" action="{{ route("admin.clientes.store") }}" enctype="multipart/form-data">
         @csrf
 

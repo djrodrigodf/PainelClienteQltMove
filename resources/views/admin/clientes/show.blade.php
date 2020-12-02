@@ -2,7 +2,15 @@
 @section('content')
 
     <div class="card-header">
-        <h1>{{ $cliente->nome_completo }} -  {{ $cliente->cpf }}</h1>
+        <div class="row d-flex">
+            <div class="col-md-6">
+                <h1>{{ $cliente->nome_completo }} -  {{ $cliente->cpf }}</h1>
+            </div>
+            <div class="col-md-6 d-flex align-content-center justify-content-end">
+                <a href="{{route('admin.clientes.aprovar', $cliente->id)}}" class="btn btn-primary mr-3 my-auto">Aprovar</a>
+                <a href="{{route('admin.clientes.reprovar', $cliente->id)}}" class="btn btn-danger my-auto">Recusar</a>
+            </div>
+        </div>
     </div>
 
     <div id="showDetails">

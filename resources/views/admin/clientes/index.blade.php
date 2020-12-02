@@ -15,6 +15,29 @@
     </div>
 
     <div class="card-body">
+
+        <div class="filtros">
+            <form name="form_filter" id="form_filter" action="{{route('admin.clientes.filter')}}" method="post">
+            <div class="row">
+                    @csrf
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="filtro_status">Status</label>
+                            <select class="form-control select2 w-100" name="filtro_status" id="filtro_status">
+                                <option value="">Selecione</option>
+                                @foreach($status as $s)
+                                    <option @if($s->id == $select) selected @endif value="{{$s->id}}">{{$s->status}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+            </div>
+            </form>
+        </div>
+
+        <hr>
+
         <div class="table-responsive">
             <table class=" table table-bordered table-striped table-hover datatable datatable-Cliente">
                 <thead>
@@ -41,43 +64,43 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($clientes as $key => $cliente)
-                        <tr data-entry-id="{{ $cliente->id }}">
+                    @foreach($propostas as $key => $proposta)
+                        <tr data-entry-id="{{ $proposta->id }}">
                             <td>
 
                             </td>
                             <td>
-                                {{ $cliente->id ?? '' }}
+                                {{ $proposta->id ?? '' }}
                             </td>
                             <td>
-                                {{ $cliente->nome_completo ?? '' }}
+                                {{ $proposta->cliente->nome_completo ?? '' }}
                                 <br>
                                 <b><span class="small">{{ $cliente->cpf ?? '' }}</span></b>
                             </td>
                             <td>
-                                {!! \App\Models\Plano::meuPlano($cliente->plano) !!}
+                                {!! \App\Models\Plano::meuPlano($proposta->plano_id) !!}
                             </td>
                             <td>
-                                {{ $cliente->status->status ?? '' }}
+                                {{ $proposta->status->status ?? '' }}
                             </td>
                             <td>
-                                {{ \Carbon\Carbon::parse($cliente->created_at)->format('d/m/Y H:i') ?? '' }}
+                                {{ \Carbon\Carbon::parse($proposta->created_at)->format('d/m/Y H:i') ?? '' }}
                             </td>
                             <td>
                                 @can('cliente_show')
-                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.clientes.show', $cliente->id) }}">
+                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.propostas.show', $proposta->id) }}">
                                         {{ trans('global.view') }}
                                     </a>
                                 @endcan
 
                                 @can('cliente_edit')
-                                    <a class="btn btn-xs btn-info" href="{{ route('admin.clientes.edit', $cliente->id) }}">
+                                    <a class="btn btn-xs btn-info" href="{{ route('admin.clientes.edit', $proposta->cliente->id) }}">
                                         {{ trans('global.edit') }}
                                     </a>
                                 @endcan
 
                                 @can('cliente_delete')
-                                    <form action="{{ route('admin.clientes.destroy', $cliente->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                    <form action="{{ route('admin.clientes.destroy', $proposta->cliente->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
@@ -99,6 +122,7 @@
 @endsection
 @section('scripts')
 @parent
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
     $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
@@ -145,5 +169,11 @@
 
 })
 
+    $('#filtro_status').change(function() {
+        console.log('teste')
+        $("form[name='form_filter']").submit();
+    });
+
 </script>
+
 @endsection
