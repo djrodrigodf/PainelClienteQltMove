@@ -31,6 +31,8 @@ class Plano extends Model
         'r_dois',
         'r_tres',
         'foto',
+        'versao',
+        'prazo',
         'created_at',
         'updated_at',
         'deleted_at',

@@ -1,7 +1,7 @@
 <div class="card my-3">
     <div class="card-header">
-        <h3>Dados do Cliente:</h3>
-        <a href="{{route('admin.clientes.edit', $proposta->cliente->id)}}" class="btn btn-success">Editar</a>
+        <h3>Cliente</h3>
+{{--        <a href="{{route('admin.clientes.edit', $proposta->cliente->id)}}" class="btn btn-success">Editar</a>--}}
     </div>
     <div class="card-body">
         <div class="row">

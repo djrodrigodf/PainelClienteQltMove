@@ -53,6 +53,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('propostas', 'PropostaController');
     Route::post('proposta/aprovar', 'PropostaController@aprovar')->name('aprovar_proposta');
     Route::post('proposta/reprovar', 'PropostaController@reprovar')->name('reprovar_proposta');
+    Route::get('proposta/ajustar/{id}', 'PropostaController@ajustarplano')->name('ajustarplano_proposta');
+    Route::post('proposta/atualizarplano', 'PropostaController@atualizarplano')->name('atualizarplano_proposta');
+    Route::get('proposta/contrato/{id}', 'PropostaController@criarcontratosadeno')->name('contrato_proposta');
 
     // Status Clientes
     Route::delete('status-clientes/destroy', 'StatusClienteController@massDestroy')->name('status-clientes.massDestroy');

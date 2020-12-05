@@ -11,7 +11,7 @@
                     <select class="form-control select2" name="plano_nome" id="plano_nome">
                         <option value="">Selecione</option>
                         @foreach($planos as $plano)
-                            <option value="{{$plano->veiculo}}">{{$plano->veiculo}}</option>
+                            <option value="{{$plano->veiculo}}">{{$plano->veiculo}} - Disponivel em patio ({{\App\Models\VwVeiculosDisponiveis::VeiculosDisponiveis($plano->versao)}})</option>
                         @endforeach
                     </select>
                 </div>
@@ -26,6 +26,8 @@
         <div class="row">
             <input class="form-control {{ $errors->has('plano') ? 'is-invalid' : '' }}" type="hidden" name="plano" id="plano" value="{{ old('plano', '') }}">
             <input class="form-control {{ $errors->has('valor_plano') ? 'is-invalid' : '' }} dinheiro" type="hidden" name="valor_plano" id="valor_plano" value="{{ old('valor_plano', '') }}">
+            <input class="form-control" type="hidden" name="valor_plano" id="valor_plano" value="{{ old('valor_plano', '') }}">
+            <input class="form-control" type="hidden" name="versao" id="versao" value="">
         </div>
     </div>
 </div>

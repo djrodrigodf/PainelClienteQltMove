@@ -11,7 +11,11 @@
             </div>
             <div class="col-md-6 d-flex align-content-center justify-content-end">
                 <a id="aprovar" href="#" data-toggle="modal" data-target="#aprovarModal" class="btn btn-primary mr-3 my-auto">Aprovar</a>
-                <a id="reprovar" href="#" data-toggle="modal" data-target="#reprovarModal"  class="btn btn-danger my-auto">Recusar</a>
+                <a id="reprovar" href="#" data-toggle="modal" data-target="#reprovarModal"  class="btn btn-danger my-auto mr-3">Recusar</a>
+                    @if($proposta->status_id == 3)
+                        <a id="ajustar_plano" href="{{route('admin.ajustarplano_proposta', $proposta->id)}}" class="btn btn-success my-auto mr-3">Ajustar Plano</a>
+                    <a id="contrato" href="{{route('admin.contrato_proposta', $proposta->id)}}" class="btn btn-success my-auto">Assinar Proposta</a>
+                    @endif
             </div>
         </div>
     </div>
@@ -36,13 +40,27 @@
                             @include('admin.propostas.tab_plano')
                         </div>
                         @if($credito)
-                        <div class="tab-pane" id="credito" role="tabpanel">
-                            @if($proposta->status_id == 2 || $proposta->status_id == 3)
-                            <p><b>Situação: </b> {{$proposta->status->status}}</p>
-                            @endif
-                            <p><b>Valo Aprovado: </b>R$ {{number_format($credito->valor_aprovado,2,",",".")}}</p>
-                            <p><a class="btn btn-default" href="{{url('storage\\' . $credito->anexo)}}" download><i class="fas fa-download"></i> Anexo</a></p>
-                        </div>
+
+
+
+                            <div class="tab-pane" id="credito" role="tabpanel">
+
+                                <div class="card my-3">
+                                    <div class="card-header">
+                                        <h3>Credito</h3>
+                                    </div>
+
+                                <div class="card-body">
+                                @if($proposta->status_id == 2 || $proposta->status_id == 3)
+                                    <p><b>Situação: </b> {{$proposta->status->status}}</p>
+                                @endif
+                                <p><b>Valo Aprovado: </b>R$ {{number_format($credito->valor_aprovado,2,",",".")}}</p>
+                                <p><a class="btn btn-default" href="{{url('storage\\' . $credito->anexo)}}" download><i class="fas fa-download"></i> Anexo</a></p>
+                                </div>
+                            </div>
+
+                            </div>
+
                             @endif
                     </div>
                 </div>

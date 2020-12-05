@@ -47,7 +47,7 @@ class ClienteController extends Controller
 
         $referencia_bancarias = ReferenciaBancarium::all()->pluck('banco_codigo', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $planos = Plano::groupBy('veiculo')->get();
+        $planos = Plano::where('ativo', 1)->groupBy('veiculo')->get();
 
         $statuses = StatusCliente::all()->pluck('status', 'id')->prepend(trans('global.pleaseSelect'), '');
 

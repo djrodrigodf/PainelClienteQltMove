@@ -20,19 +20,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a405b316-83d7-49f5-aa70-b3b3a163f555" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/PainelClienteQltMove.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/PainelClienteQltMove.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/PlanosController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/PlanosController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/ClienteController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/ClienteController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/PropostaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/PropostaController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Models/Plano.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Plano.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Proposta.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Proposta.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/app.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/database.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/database.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/admin/clientes/create_dados_planos.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/clientes/create_dados_planos.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/clientes/listPlanos.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/clientes/listPlanos.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/planos/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/planos/create.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/planos/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/planos/edit.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/planos/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/planos/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/planos/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/planos/show.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/propostas/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/propostas/show.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/propostas/tab_cliente.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/propostas/tab_cliente.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/propostas/tab_plano.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/propostas/tab_plano.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -196,7 +195,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="js.ns.project" value="true" />
     <property name="js.ns.project.flavor" value="JavaScript" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/admin/clientes" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/admin/propostas" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -209,8 +208,12 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\laragon\www\painelsaga\resources\views\admin\propostas" />
       <recent name="D:\laragon\www\PainelClienteQltMove\resources\views\admin\clientes" />
       <recent name="D:\laragon\www\PainelClienteQltMove\public\js" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\laragon\www\painelsaga\app\Http\Controllers\Admin" />
     </key>
   </component>
   <component name="RunManager">
@@ -238,6 +241,10 @@
       <workItem from="1605894068576" duration="600000" />
       <workItem from="1606238478092" duration="15172000" />
       <workItem from="1606866602926" duration="9172000" />
+      <workItem from="1607006835246" duration="45000" />
+      <workItem from="1607013489282" duration="6355000" />
+      <workItem from="1607024929545" duration="8691000" />
+      <workItem from="1607093091747" duration="7883000" />
     </task>
     <servers />
   </component>
@@ -255,20 +262,5 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="122" y="241" width="998" height="708" key="SettingsEditor" timestamp="1605722810421">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="122" y="241" width="998" height="708" key="SettingsEditor/0.0.1920.1040/1920.0.2560.1040@0.0.1920.1040" timestamp="1605722810421" />
-    <state x="848" y="182" width="583" height="624" key="find.popup" timestamp="1606240713865">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="848" y="182" width="583" height="624" key="find.popup/0.0.1920.1040/1920.0.2560.1040@0.0.1920.1040" timestamp="1606240713865" />
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1606873226435">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040/1920.0.2560.1040@0.0.1920.1040" timestamp="1606254891729" />
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1606873226435" />
   </component>
 </project>

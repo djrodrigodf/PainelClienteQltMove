@@ -24,6 +24,8 @@ class Proposta extends Model
         'cliente_id',
         'plano_id',
         'status_id',
+        'versao',
+        'contratoSadeno',
         'criado_por',
         'created_at',
         'updated_at',
