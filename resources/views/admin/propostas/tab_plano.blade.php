@@ -25,35 +25,27 @@
                     <tbody>
                     <tr>
                         <td class="font-weight-bold">Franquia de KM Mensal</td>
-                        <td>{{$proposta->plano->km}}</td>
-                    </tr>
-                    <tr>
-                        <td class="font-weight-bold">Valor da Diária</td>
-                        <td>R$ {{number_format($proposta->valor_plano / 30,2,",",".")}}</td>
+                        <td>{{$planoRegra->QtdKmFranquiaMensalPadrao}}</td>
                     </tr>
                     <tr>
                         <td class="font-weight-bold">Valor Mensal</td>
-                        <td>R$ {{number_format($proposta->valor_plano,2,",",".")}}</td>
+                        <td>R$ {{number_format($planoRegra->valor,2,",",".")}}</td>
                     </tr>
                     <tr>
                         <td class="font-weight-bold">Caução</td>
-                        <td>R$ 1.000,00</td>
+                        <td>R$ {{number_format($planoRegra->caucao,2,",",".")}}</td>
                     </tr>
                     <tr>
                         <td class="font-weight-bold">Participação Colisão</td>
-                        <td>R$ 1.700,00</td>
+                        <td>R$ {{number_format($planoRegra->participacaoColisao,2,",",".")}}</td>
                     </tr>
                     <tr>
                         <td class="font-weight-bold">Participação Terceiro</td>
-                        <td>R$ 1.000,00</td>
+                        <td>R$ {{number_format($planoRegra->participacaoTerceiro,2,",",".")}}</td>
                     </tr>
                     <tr>
                         <td class="font-weight-bold">Participação Roubo</td>
-                        <td>R$ 3.800,00</td>
-                    </tr>
-                    <tr>
-                        <td class="font-weight-bold">Valor KM Excedente</td>
-                        <td>R$ 0,36</td>
+                        <td>R$ {{number_format($planoRegra->participacaoRoubo,2,",",".")}}</td>
                     </tr>
                     </tbody>
                 </table>

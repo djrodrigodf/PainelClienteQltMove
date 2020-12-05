@@ -183,11 +183,6 @@
                 });
         });
 
-
-        $('#222plano_nome').on('change', function () {
-
-        });
-
         $('.dinheiro').mask("#.##0,00");
 
     </script>

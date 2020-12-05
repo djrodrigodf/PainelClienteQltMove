@@ -24,9 +24,8 @@
 
     <div class="card-body">
         <div class="row">
-            <input class="form-control {{ $errors->has('plano') ? 'is-invalid' : '' }}" type="hidden" name="plano" id="plano" value="{{ old('plano', '') }}">
-            <input class="form-control {{ $errors->has('valor_plano') ? 'is-invalid' : '' }} dinheiro" type="hidden" name="valor_plano" id="valor_plano" value="{{ old('valor_plano', '') }}">
-            <input class="form-control" type="hidden" name="valor_plano" id="valor_plano" value="{{ old('valor_plano', '') }}">
+            <input class="form-control" type="hidden" name="plano" id="plano" value="{{ old('plano', '') }}">
+            <input class="form-control dinheiro" type="hidden" required name="valor_plano" id="valor_plano" value="">
             <input class="form-control" type="hidden" name="versao" id="versao" value="">
         </div>
     </div>

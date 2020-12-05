@@ -14,8 +14,9 @@
                 <a id="reprovar" href="#" data-toggle="modal" data-target="#reprovarModal"  class="btn btn-danger my-auto mr-3">Recusar</a>
                     @if($proposta->status_id == 3)
                         <a id="ajustar_plano" href="{{route('admin.ajustarplano_proposta', $proposta->id)}}" class="btn btn-success my-auto mr-3">Ajustar Plano</a>
-                    <a id="contrato" href="{{route('admin.contrato_proposta', $proposta->id)}}" class="btn btn-success my-auto">Assinar Proposta</a>
+
                     @endif
+                <a id="contrato" href="{{route('admin.contrato_proposta', $proposta->id)}}" class="btn btn-success my-auto">Assinar Proposta</a>
             </div>
         </div>
     </div>

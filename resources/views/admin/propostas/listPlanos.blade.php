@@ -25,6 +25,7 @@
         let url = "{{route('api.filterplano')}}"
         let veiculo = null;
         let kmselect = null;
+        let valorApv = $('#valor_apv').val();
         $('#plano_nome').on('change', function () {
             veiculo = this.value
             $('#plano').val('')
@@ -33,7 +34,8 @@
             $('#card-planos').html('')
             axios.post(url, {
                 filterPlano: veiculo,
-                groupKm: true
+                groupKm: true,
+                valor_apv: valorApv
             })
                 .then(function (response) {
                     $('#card-veiculo').html('')
@@ -82,7 +84,8 @@
                             axios.post(url, {
                                 filterPlano: veiculo,
                                 groupKm: true,
-                                kmSelected: kmselect
+                                kmSelected: kmselect,
+                                valor_apv: valorApv
                             })
                                 .then(function (response) {
                                     $('#card-planos').html('')

@@ -8,6 +8,7 @@ use App\Http\Requests\StoreClienteRequest;
 use App\Http\Requests\UpdateClienteRequest;
 use App\Models\Cliente;
 use App\Models\Plano;
+use App\Models\PlanoRegra;
 use App\Models\Proposta;
 use App\Models\ReferenciaBancarium;
 use App\Models\ReferenciaPessoal;
@@ -92,6 +93,22 @@ class ClienteController extends Controller
             $proposta->status_id = 1;
             $proposta->criado_por = auth()->id();
             $proposta->save();
+
+            $Plano = [
+                'vigencia' => (int)$proposta->plano->periodo,
+                'valor' => $proposta->valor_plano,
+                'desconto' => 0,
+                'diaria' => number_format((float)$proposta->valor_plano / 30, 2, '.', ''),
+                'caucao' => 1000,
+                'participacaoColisao' => 1700,
+                'participacaoTerceiro' => 1700,
+                'participacaoRoubo' => 3800,
+                'kmExedente' => 0,
+                'QtdKmFranquiaMensalPadrao' => (int)$proposta->plano->km,
+                'proposta_id' => $proposta->id,
+                'plano_id' => $proposta->plano->id,
+            ];
+            PlanoRegra::create($Plano);
 
             return redirect()->route('admin.clientes.index');
         }

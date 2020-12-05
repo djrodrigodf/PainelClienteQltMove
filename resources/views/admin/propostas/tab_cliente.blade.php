@@ -98,35 +98,7 @@
     </div>
 </div>
 
-<div class="card my-3">
-    <div class="card-header">
-        <h3>Cônjuge:</h3>
-    </div>
-    <div class="card-body">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label for="nome_do_conjuge">{{ trans('cruds.cliente.fields.nome_do_conjuge') }}</label>
-                    <input disabled class="form-control" type="text" name="nome_do_conjuge" id="nome_do_conjuge" value="{{ $proposta->cliente->nome_do_conjuge}}">
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="cpf_conjuge">{{ trans('cruds.cliente.fields.cpf_conjuge') }}</label>
-                    <input disabled class="form-control" type="text" name="cpf_conjuge" id="cpf_conjuge" value="{{ $proposta->cliente->cpf_conjuge}}">
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="nasc_conjunge">{{ trans('cruds.cliente.fields.nasc_conjunge') }}</label>
-                    <input disabled class="form-control" type="text" name="nasc_conjunge" id="nasc_conjunge" value="{{ $proposta->cliente->nasc_conjunge}}">
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+
 
 <div class="card my-3">
     <div class="card-header">
@@ -210,13 +182,39 @@
 
 <div class="card my-3">
     <div class="card-header">
+        <h3>Cônjuge:</h3>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="nome_do_conjuge">{{ trans('cruds.cliente.fields.nome_do_conjuge') }}</label>
+                    <input disabled class="form-control" type="text" name="nome_do_conjuge" id="nome_do_conjuge" value="{{ $proposta->cliente->nome_do_conjuge}}">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="cpf_conjuge">{{ trans('cruds.cliente.fields.cpf_conjuge') }}</label>
+                    <input disabled class="form-control" type="text" name="cpf_conjuge" id="cpf_conjuge" value="{{ $proposta->cliente->cpf_conjuge}}">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="nasc_conjunge">{{ trans('cruds.cliente.fields.nasc_conjunge') }}</label>
+                    <input disabled class="form-control" type="text" name="nasc_conjunge" id="nasc_conjunge" value="{{ $proposta->cliente->nasc_conjunge}}">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card my-3">
+    <div class="card-header">
         <h3>Dados Profissionais:</h3>
     </div>
 
-    @php
-
-
-        @endphp
     <div class="card-body">
         <div class="row">
             <div class="col-md-8">
@@ -411,9 +409,6 @@
         </div>
     </div>
 </div>
-
-
-
 
 @section('scripts')
     @parent
