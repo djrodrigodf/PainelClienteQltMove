@@ -215,7 +215,7 @@ class PropostaController extends Controller
             "ConteudoAnexoCNH" => "data:image/PNG;base64, FAKE",
             "Responsavel" => ""
         ];
-        $sendClientSadeno = Http::post('https://hmg.sadeno.qualityfrotas.com.br/index.php?r=integracao%2Fcadastrar-cliente', $clienteSadeno)->json();
+        $sendClientSadeno = Http::withoutVerifying()->post('https://hmg.sadeno.qualityfrotas.com.br/index.php?r=integracao%2Fcadastrar-cliente', $clienteSadeno)->json();
 
         $cpf = str_replace(['.'], '', $proposta->cliente->cpf);
         $cpf = str_replace('-', '', $cpf);
@@ -262,7 +262,7 @@ class PropostaController extends Controller
           "DataAssinatura"  => Carbon::now()->format('d/m/Y'),
           "Plano"  => $Plano
     ];
-        $sendContratoSadeno = Http::post('https://hmg.sadeno.qualityfrotas.com.br/index.php?r=integracao%2Fcadastrar-contrato-assinatura', $contratoSadeno)->json();
+        $sendContratoSadeno = Http::withoutVerifying()->post('https://hmg.sadeno.qualityfrotas.com.br/index.php?r=integracao%2Fcadastrar-contrato-assinatura', $contratoSadeno)->json();
 
         if ($sendContratoSadeno['status'] == 5) {
             $proposta->status_id = 4;
@@ -301,7 +301,7 @@ class PropostaController extends Controller
                 ]
             ];
 
-            $lead = Http::withBasicAuth('sistemas@qualityfrotas.com.br', 'K)#n3guinha')->post('https://api.leadstation.com.br/api/v1/apikeys/oZjVlmgdJBOB772GYPnB/customers/opportunities', $leadStation);
+            $lead = Http::withoutVerifying()->withBasicAuth('sistemas@qualityfrotas.com.br', 'K)#n3guinha')->post('https://api.leadstation.com.br/api/v1/apikeys/oZjVlmgdJBOB772GYPnB/customers/opportunities', $leadStation);
 
             $idLead = $lead->json()['id'];
 
@@ -312,7 +312,7 @@ class PropostaController extends Controller
                 ]
             ];
 
-            $leadProp = Http::withBasicAuth('sistemas@qualityfrotas.com.br', 'K)#n3guinha')->patch('https://app.leadstation.com.br/api/v1/opportunities/' . $idLead, $updateStatus)->json();
+            $leadProp = Http::withoutVerifying()->withBasicAuth('sistemas@qualityfrotas.com.br', 'K)#n3guinha')->patch('https://app.leadstation.com.br/api/v1/opportunities/' . $idLead, $updateStatus)->json();
 
             return redirect()->route('admin.clientes.index');
 
