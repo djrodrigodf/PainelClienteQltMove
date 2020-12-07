@@ -73,14 +73,14 @@
                                 </div>
                             </div>
                         @endif
-                        @if($proposta->status_id == 3)
+                        @if($proposta->status_id == 4)
                             @if(count($vendas) >= 1)
                         <div class="tab-pane" id="cobranca" role="tabpanel">
                             @include('admin.propostas.tab_cobranca')
                         </div>
                             @endif
                         @endif
-                        @if($proposta->status_id == 4)
+                        @if($proposta->status_id == 3 || $proposta->status_id == 4)
                         <div class="tab-pane" id="documento" role="tabpanel">
                             @include('admin.propostas.tab_documento')
                         </div>

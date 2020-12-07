@@ -30,9 +30,14 @@ class Venda extends Model
             }
 
 
-            if ($valor <= floatval($valorVenda)) return "<span class='badge badge-success'>Pag2</span>";
-            if ($valor == 0) return "<span class='badge badge-primary'>Aguardando Pagamento</span>";
-            if ($valor >= floatval($valorVenda)) return "<span class='badge badge-secondary'>Pagamento Parcial</span>";
+            if ($valor == 0) {
+                return "<span class='badge badge-primary'>Aguardando Pagamento</span>";
+            } elseif ($valor >= floatval($valorVenda)) {
+                return "<span class='badge badge-success'>Pago</span>";
+            } elseif ($valor < floatval($valorVenda) && $valor != 0) {
+                return "<span class='badge badge-secondary'>Pagamento Parcial</span>";
+            }
+
         } else {
             return "<span class='badge badge-warning'>Sem Cobrança</span>";
         }
