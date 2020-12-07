@@ -14,14 +14,14 @@
                     @csrf
                     <div class="form-group">
                         <label for="valor_aprovado">Valor Aprovado</label>
-                        <input class="form-control" type="text" name="valor_aprovado" id="valor_aprovado" value="{{ old('valor_aprovado', '') }}">
+                        <input class="form-control" required type="text" name="valor_aprovado" id="valor_aprovado" value="{{ old('valor_aprovado', '') }}">
                     </div>
 
 
                     <div class="form-group">
                         <label for="image">Anexo</label>
                         <div class="custom-file">
-                            <input type="file" name="image" class="custom-file-input" id="image">
+                            <input type="file" required name="image" class="custom-file-input" id="image">
                             <label class="custom-file-label" for="image">Selecione o anexo</label>
                         </div>
                     </div>

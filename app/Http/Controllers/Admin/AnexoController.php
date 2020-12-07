@@ -46,6 +46,11 @@ class AnexoController extends Controller
         $upload = $request->documento->storeAs("public\\documentos\\$proposta->id", $nameFile);
         $request['proposta_id'] = $request->id;
         $request['anexo'] = $nameFile;
+
+        if ($request['descricao'] == null) {
+            $request['descricao'] = "--";
+        }
+
         Anexo::create($request->all());
 
         return redirect()->route('admin.propostas.show', $request->id);

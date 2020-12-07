@@ -15,7 +15,7 @@
 
                     <div class="form-group">
                         <label for="tipo">Tipo</label>
-                        <select class="form-control" name="tipo" id="tipo">
+                        <select required class="form-control" name="tipo" id="tipo">
                             <option selected disabled value="">--Selecione um tipo--</option>
                             @foreach(\App\Models\Anexo::TIPO as $tipo)
                                 <option value="{{$tipo}}">{{$tipo}}</option>
@@ -32,7 +32,7 @@
                     <div class="form-group">
                         <label for="image">Anexo</label>
                         <div class="custom-file">
-                            <input type="file" name="documento" class="custom-file-input" id="documento">
+                            <input type="file" required name="documento" class="custom-file-input" id="documento">
                             <label class="custom-file-label" for="documento">Selecione o anexo</label>
                         </div>
                     </div>

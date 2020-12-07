@@ -116,6 +116,13 @@ class PropostaController extends Controller
     {
 
         $proposta = Proposta::find($request->id);
+
+        if ($request->valor_aprovado < $proposta->valor_plano  ) {
+
+            return redirect()->back()->with('error', 'Valor de aprovado não pode ser menor que o valor solicitado');
+
+        }
+
         $proposta->status_id = 3;
         $proposta->save();
 
@@ -174,6 +181,7 @@ class PropostaController extends Controller
         $proposta->versao = $request->versao;
         $proposta->save();
 
+        $vendas = Venda::where('proposta_id', $proposta->id)->get();
         $anexos = Anexo::where('proposta_id', $proposta->id)->get();
 
         $temProposta = false;
@@ -211,7 +219,7 @@ class PropostaController extends Controller
         $credito = Credito::where('cliente_id', $proposta->cliente_id)->first();
         $planoRegra = PlanoRegra::where('proposta_id', $proposta->id)->first();
 
-        return view('admin.propostas.show', compact('id', 'proposta', 'credito', 'planoRegra', 'temProposta'));
+        return view('admin.propostas.show', compact('id', 'proposta', 'credito', 'planoRegra', 'temProposta', 'vendas', 'anexos'));
     }
 
     public function criarcontratosadeno(Request $request, $id)
