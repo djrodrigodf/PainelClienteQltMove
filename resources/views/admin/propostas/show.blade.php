@@ -4,13 +4,15 @@
     @include('admin.propostas.modal_aprovar')
     @include('admin.propostas.modal_reprovar')
 
+
+
     <div class="card-header">
         <div class="row d-flex">
             <div class="col-md-6">
                 <h1>Proposta</h1>
             </div>
             <div class="col-md-6 d-flex align-content-center justify-content-end">
-                @if($proposta->status_id == 1)
+                @if($proposta->status_id == 1 && \Illuminate\Support\Facades\Auth::user()->roles[0]->id == 2 || \Illuminate\Support\Facades\Auth::user()->roles[0]->id == 1)
                     <a id="aprovar" href="#" data-toggle="modal" data-target="#aprovarModal" class="btn btn-primary mr-3 my-auto">Aprovar</a>
                     <a id="reprovar" href="#" data-toggle="modal" data-target="#reprovarModal" class="btn btn-danger my-auto mr-3">Recusar</a>
                 @endif
