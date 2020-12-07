@@ -47,12 +47,13 @@ class VerificaPagamento extends Command
             $dados = json_decode($pag->gateway);
 
 
-            if ($pag->dataPagamento == null && isset($dados->id)) {
+            if ($pag->valorPago == 0.00 && isset($dados->id)) {
+
                 $baixa = Http::get("https://api.iugu.com/v1/invoices/$dados->id?api_token=4403cd61ce8f5c55ea93497e4c6ca6a9")->json();
                 $darBaixa = Pagamento::find($pag->id);
                 $darBaixa->valorPago = (int)$baixa['total_paid_cents'] / 100;
                 $darBaixa->taxas = (int)$baixa['taxes_paid_cents'] / 100;
-                $darBaixa->dataPagamento = Carbon::parse($baixa['paid_at'])->format('Y-m-d H:i:s');
+                if ($baixa['paid_at']) $darBaixa->dataPagamento = Carbon::parse($baixa['paid_at'])->format('Y-m-d H:i:s');
                 $darBaixa->multa = (int)$baixa['fines_on_occurrence_day_cents'] / 100;
                 $darBaixa->dadosBoleto = $baixa['payment_method'];
                 $darBaixa->save();
