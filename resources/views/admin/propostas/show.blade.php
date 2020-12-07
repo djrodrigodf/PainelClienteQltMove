@@ -38,8 +38,10 @@
                         @if($credito)
                             <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#credito" role="tab" aria-controls="credito" aria-selected="false">Credito</a></li>
                         @endif
+                        @if($proposta->status_id == 3)
                         <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#cobranca" role="tab" aria-controls="cobranca" aria-selected="false">Cobrança</a></li>
                         <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#documento" role="tab" aria-controls="documento" aria-selected="false">Documentos</a></li>
+                        @endif
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane active" id="cliente" role="tabpanel">
@@ -64,12 +66,14 @@
                                 </div>
                             </div>
                         @endif
+                        @if($proposta->status_id == 3)
                         <div class="tab-pane" id="cobranca" role="tabpanel">
                             @include('admin.propostas.tab_cobranca')
                         </div>
                         <div class="tab-pane" id="documento" role="tabpanel">
                             @include('admin.propostas.tab_documento')
                         </div>
+                        @endif
                     </div>
                 </div>
             </div>
