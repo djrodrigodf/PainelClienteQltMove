@@ -168,10 +168,21 @@ class PropostaController extends Controller
     {
 
         $proposta = Proposta::find($request->id);
+
         $proposta->plano_id = (int) $request->plano;
         $proposta->valor_plano = $request->valor_plano;
         $proposta->versao = $request->versao;
         $proposta->save();
+
+        $anexos = Anexo::where('proposta_id', $proposta->id)->get();
+
+        $temProposta = false;
+
+        foreach ($anexos as $a) {
+            if ($a->tipo == "Proposta") {
+                $temProposta = true;
+            }
+        }
 
         $buscaPlanoRegra = PlanoRegra::where('proposta_id', $proposta->id)->first();
 
@@ -200,7 +211,7 @@ class PropostaController extends Controller
         $credito = Credito::where('cliente_id', $proposta->cliente_id)->first();
         $planoRegra = PlanoRegra::where('proposta_id', $proposta->id)->first();
 
-        return view('admin.propostas.show', compact('id', 'proposta', 'credito', 'planoRegra'));
+        return view('admin.propostas.show', compact('id', 'proposta', 'credito', 'planoRegra', 'temProposta'));
     }
 
     public function criarcontratosadeno(Request $request, $id)
@@ -279,6 +290,7 @@ class PropostaController extends Controller
           "Plano"  => $Plano
     ];
         $sendContratoSadeno = Http::withoutVerifying()->post('https://hmg.sadeno.qualityfrotas.com.br/index.php?r=integracao%2Fcadastrar-contrato-assinatura', $contratoSadeno)->json();
+
 
         if ($sendContratoSadeno['status'] == 5) {
             $proposta->status_id = 4;
