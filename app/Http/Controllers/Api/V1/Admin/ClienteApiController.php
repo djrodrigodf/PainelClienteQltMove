@@ -7,12 +7,22 @@ use App\Http\Requests\StoreClienteRequest;
 use App\Http\Requests\UpdateClienteRequest;
 use App\Http\Resources\Admin\ClienteResource;
 use App\Models\Cliente;
+use App\Models\Proposta;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class ClienteApiController extends Controller
 {
+
+    public function assinar(Request $request) {
+        $proposta = Proposta::find($request->id);
+        $proposta->status_id = 5;
+        $proposta->save();
+        $status = true;
+        return compact('status');
+    }
+
     public function index()
     {
         abort_if(Gate::denies('cliente_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');

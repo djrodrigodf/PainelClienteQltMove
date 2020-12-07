@@ -75,7 +75,7 @@
                             <td>
                                 {{ $proposta->cliente->nome_completo ?? '' }}
                                 <br>
-                                <b><span class="small">{{ $cliente->cpf ?? '' }}</span></b>
+                                <b><span class="small">{{ $proposta->cliente->cpf ?? '' }}</span></b>
                             </td>
                             <td>
                                 {!! \App\Models\Plano::meuPlano($proposta->plano_id) !!}

@@ -29,4 +29,5 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
 Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin'], function () {
     Route::post('filterPlano', 'PlanosApiController@findPlano')->name('filterplano');
     Route::post('findIdPlano', 'PlanosApiController@findPlano')->name('findidplano');
+    Route::post('assinar', 'ClienteApiController@assinar')->name('assinar');
 });
