@@ -5,8 +5,8 @@
         @csrf
 
         @include('admin.clientes.create_dados_planos')
-        @include('admin.clientes.create_dados_endereco')
         @include('admin.clientes.create_dados_cliente')
+        @include('admin.clientes.create_dados_endereco')
         @include('admin.clientes.create_dados_profissionais')
         @include('admin.clientes.create_dados_referencias')
         @include('admin.clientes.create_dados_bancarias')
