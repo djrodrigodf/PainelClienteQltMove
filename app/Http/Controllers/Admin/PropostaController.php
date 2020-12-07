@@ -278,7 +278,7 @@ class PropostaController extends Controller
             "DataInicioVigencia" => Carbon::now()->format('d/m/Y'),
             "DataFimVigencia" => Carbon::now()->addMonths((int)$proposta->plano->periodo)->format('d/m/Y'),
             "CodigoCPFCliente" => $cpf,
-            "CodigoModelo" => 1024,
+            "CodigoModelo" => 1025,
             "CodigoFormaPagamento" => 1,
             "CodigoTipoMedicao" => 3,
             "CodigoTipoRetencao" => 1,
