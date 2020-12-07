@@ -12,9 +12,11 @@ use App\Models\PlanoRegra;
 use App\Models\Proposta;
 use App\Models\Venda;
 use App\Models\VwVeiculosDisponiveis;
+use Gate;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Symfony\Component\HttpFoundation\Response;
 
 class PropostaController extends Controller
 {
@@ -57,6 +59,8 @@ class PropostaController extends Controller
      */
     public function show(Proposta $proposta)
     {
+
+        abort_if(Gate::denies('cliente_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $proposta->load('criado_por', 'cliente', 'plano', 'status');
         $credito = Credito::where('cliente_id', $proposta->cliente_id)->first();
         $planoRegra = PlanoRegra::where('proposta_id', $proposta->id)->first();
