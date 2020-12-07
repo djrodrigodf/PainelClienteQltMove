@@ -41,7 +41,9 @@
                             <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#credito" role="tab" aria-controls="credito" aria-selected="false">Credito</a></li>
                         @endif
                         @if($proposta->status_id == 3)
+                            @if(count($vendas) >= 1)
                         <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#cobranca" role="tab" aria-controls="cobranca" aria-selected="false">Cobrança</a></li>
+                            @endif
                         <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#documento" role="tab" aria-controls="documento" aria-selected="false">Documentos</a></li>
                         @endif
                     </ul>
