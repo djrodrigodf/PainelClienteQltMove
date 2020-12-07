@@ -61,20 +61,41 @@
                 validator.focusInvalid();
             },
             submitHandler: function(form) {
-                $('#CadastroDeProposta').submit();
+                $(".loading").fadeIn("slow");
+                $('#CadastroDeProposta')[0].submit();
             },
             ignore:'',
             rules: {
                 valor_plano: "required",
                 nome_completo: "required",
                 cpf: "required",
-                rg: "required"
+                rg: "required",
+                dt_emissao_rg: "required",
+                dt_nasc: "required",
+                cnh: "required",
+                nacionalidade: "required",
+                estado_civil: "required",
+                cep: "required",
+                endereco: "required",
+                complemento: "required",
+                email: "required",
+                tel_celular: "required",
             },
             messages: {
                 valor_plano: "Selecione um Plano",
                 nome_completo: "Nome obrigatório",
                 cpf: "CPF obrigatório",
-                rg: "RG obrigatório"
+                rg: "RG obrigatório",
+                dt_emissao_rg: "Data Emissão RG obrigatório",
+                dt_nasc: "Data Nascimento obrigatório",
+                cnh: "CNH obrigatório",
+                nacionalidade: "Nascionalidade obrigatório",
+                estado_civil: "Estado Civil obrigatório",
+                cep: "CEP obrigatório",
+                endereco: "Endereço obrigatório",
+                complemento: "Compelemento do Endereço obrigatório",
+                email: "Email obrigatório",
+                tel_celular: "Celular obrigatório",
             }
         });
 

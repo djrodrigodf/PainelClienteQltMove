@@ -26,6 +26,11 @@
 </head>
 
 <body class="c-app">
+
+<div class="loading">
+    <img src="{{asset('img/loader.gif')}}" alt="">
+</div>
+
     @include('partials.menu')
     <div class="c-wrapper">
         <header class="c-header c-header-fixed px-3">
@@ -226,7 +231,15 @@
   $.fn.dataTable.ext.classes.sPageButton = '';
 });
 
+        $(document).ready(function() {
+            $(".loading").fadeOut("slow");
+        });
+
     </script>
+
+
+
+
     @yield('scripts')
 </body>
 

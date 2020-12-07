@@ -16,6 +16,20 @@ textarea {
     padding: 0 !important;
 }
 
+.loading {
+    position: absolute;
+    background: #ffffff75;
+    width: 100%;
+    z-index: 999999;
+    text-align: center;
+    height: 100vh;
+    display: flex;
+    margin: 0 auto;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
 .titulo-vendas {
     margin-bottom: 0;
     padding-bottom: 0;
