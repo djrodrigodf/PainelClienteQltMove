@@ -25,7 +25,6 @@
                     @if ($temProposta)
                             <a id="contrato" href="{{route('admin.contrato_proposta', $proposta->id)}}" class="btn btn-success my-auto">Assinar Proposta</a>
                     @endif
-
                 @endif
             </div>
         </div>
@@ -42,12 +41,12 @@
                         @if($credito)
                             <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#credito" role="tab" aria-controls="credito" aria-selected="false">Credito</a></li>
                         @endif
-                        @if($proposta->status_id == 4)
+                        @if($proposta->status_id == 4 || $proposta->status_id == 5)
                             @if(count($vendas) >= 1)
                         <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#cobranca" role="tab" aria-controls="cobranca" aria-selected="false">Cobrança</a></li>
                             @endif
                         @endif
-                        @if($proposta->status_id == 3 || $proposta->status_id == 4)
+                        @if($proposta->status_id == 3 || $proposta->status_id == 4 || $proposta->status_id == 5)
                         <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#documento" role="tab" aria-controls="documento" aria-selected="false">Documentos</a></li>
                             @endif
 
@@ -75,14 +74,14 @@
                                 </div>
                             </div>
                         @endif
-                        @if($proposta->status_id == 4)
+                        @if($proposta->status_id == 4 || $proposta->status_id == 5)
                             @if(count($vendas) >= 1)
                         <div class="tab-pane" id="cobranca" role="tabpanel">
                             @include('admin.propostas.tab_cobranca')
                         </div>
                             @endif
                         @endif
-                        @if($proposta->status_id == 3 || $proposta->status_id == 4)
+                        @if($proposta->status_id == 3 || $proposta->status_id == 4 || $proposta->status_id == 5)
                         <div class="tab-pane" id="documento" role="tabpanel">
                             @include('admin.propostas.tab_documento')
                         </div>
