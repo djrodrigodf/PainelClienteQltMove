@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Anexo;
 use App\Models\Cliente;
 use App\Models\Credito;
+use App\Models\Pagamento;
 use App\Models\Plano;
 use App\Models\PlanoRegra;
 use App\Models\Proposta;
+use App\Models\Venda;
 use App\Models\VwVeiculosDisponiveis;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -57,9 +60,18 @@ class PropostaController extends Controller
         $proposta->load('criado_por', 'cliente', 'plano', 'status');
         $credito = Credito::where('cliente_id', $proposta->cliente_id)->first();
         $planoRegra = PlanoRegra::where('proposta_id', $proposta->id)->first();
+        $vendas = Venda::where('proposta_id', $proposta->id)->get();
+        $anexos = Anexo::where('proposta_id', $proposta->id)->get();
 
+        $temProposta = false;
 
-        return view('admin.propostas.show', compact('proposta', 'credito', 'planoRegra'));
+        foreach ($anexos as $a) {
+            if ($a->tipo == "Proposta") {
+                $temProposta = true;
+            }
+        }
+
+        return view('admin.propostas.show', compact('proposta', 'credito', 'planoRegra', 'vendas', 'anexos', 'temProposta'));
     }
 
     /**
@@ -314,9 +326,87 @@ class PropostaController extends Controller
 
             $leadProp = Http::withoutVerifying()->withBasicAuth('sistemas@qualityfrotas.com.br', 'K)#n3guinha')->patch('https://app.leadstation.com.br/api/v1/opportunities/' . $idLead, $updateStatus)->json();
 
+            $criarVenda = new Venda();
+            $criarVenda->proposta_id = $proposta->id;
+            $criarVenda->valor = $proposta->valor_plano;
+            $criarVenda->descricao = 'Pagamento Assinatura';
+            $criarVenda->item = 'Assinatura';
+            $criarVenda->dataVenda = Carbon::now();
+            $criarVenda->dataFaturamento = Carbon::now();
+            $criarVenda->ativo = 1;
+            $criarVenda->save();
+
+            $cobranca = [
+                'ensure_workday_due_date' => true,
+                'items' => [
+                    0 => [
+                        'description' => 'Pagamento Assinatura',
+                        'quantity' => 1,
+                        'price_cents' => str_replace('.', '', $proposta->valor_plano),
+                    ],
+                ],
+                'payer' => [
+                    'address' => [
+                        'zip_code' => str_replace('-', '', $proposta->cliente->cep),
+                        'street' => $proposta->cliente->endereco,
+                        'city' => $proposta->cliente->cidade,
+                        'state' => $proposta->cliente->estado,
+                        'number' => $proposta->cliente->complemento,
+                        'district' => $proposta->cliente->bairro,
+                        'country' => 'brasil',
+                    ],
+                    'name' => $proposta->cliente->nome_completo,
+                    'cpf_cnpj' => $cpf,
+                    'email' => $proposta->cliente->email,
+                ],
+                'splits' => [
+                    0 => [
+                    ],
+                ],
+                'due_date' => Carbon::now()->format('Y-m-d'),
+                'email' => $proposta->cliente->email,
+                'payable_with' => 'all',
+            ];
+
+            $gerarCobranca = Http::post('https://api.iugu.com/v1/invoices?api_token=4403cd61ce8f5c55ea93497e4c6ca6a9', $cobranca)->json();
+
+            $salvarCobranca = new Pagamento();
+            $salvarCobranca->valor = $proposta->valor_plano;
+            $salvarCobranca->valorPago = 0;
+            $salvarCobranca->dataVencimento = Carbon::now();
+            $salvarCobranca->dataEmissao = Carbon::now();
+//            $salvarCobranca->dataPagamento = ;
+            $salvarCobranca->ativo = 1;
+            $salvarCobranca->tipo = "Pagamento Online";
+            $salvarCobranca->taxas = 0;
+            $salvarCobranca->multa = 0;
+            $salvarCobranca->desconto = 0;
+//            $salvarCobranca->dadosBoleto = ;
+            $salvarCobranca->gateway = json_encode($gerarCobranca);
+            $salvarCobranca->venda_id = $criarVenda->id;
+            $salvarCobranca->save();
+
             return redirect()->route('admin.clientes.index');
 
         }
+
+    }
+
+    public function imprimirProposta(Request $request, $id) {
+
+        $auth = base64_encode("jasperadmin:jasperadmin");
+        $context = stream_context_create([
+            "http" => [
+                "header" => "Authorization: Basic $auth"
+            ]
+        ]);
+        $filename = "Proposta-$id-" . Carbon::now()->format('dmyHi');
+        $data = file_get_contents('http://10.2.5.86:8080/jasperserver/rest_v2/reports/reports/assinatura/Contrato.pdf?Contrato=' . $id, false, $context );
+
+        header("Content-type: application/octet-stream");
+        header("Content-disposition: attachment;filename=$filename.pdf");
+
+        return $data;
 
     }
 }

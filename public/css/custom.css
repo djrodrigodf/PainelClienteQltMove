@@ -12,6 +12,35 @@ textarea {
     color: red;
 }
 
+.hiddenRow {
+    padding: 0 !important;
+}
+
+.titulo-vendas {
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.titulo-vendas th {
+    border: none !important;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    font-size: 12px;
+    color: #989898;
+}
+
+.vendas-internas {
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.vendas-internas th {
+    border: none !important;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    font-size: 12px;
+}
+
 table.dataTable tbody td.select-checkbox::before,
 table.dataTable tbody td.select-checkbox::after,
 table.dataTable tbody th.select-checkbox::before,
