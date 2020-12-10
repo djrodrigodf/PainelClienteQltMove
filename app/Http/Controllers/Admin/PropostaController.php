@@ -250,7 +250,7 @@ class PropostaController extends Controller
             "ConteudoAnexoCNH" => "data:image/PNG;base64, FAKE",
             "Responsavel" => ""
         ];
-        $sendClientSadeno = Http::withoutVerifying()->post('https://hmg.sadeno.qualityfrotas.com.br/index.php?r=integracao%2Fcadastrar-cliente', $clienteSadeno)->json();
+        $sendClientSadeno = Http::withoutVerifying()->post('https://sadeno.qualityfrotas.com.br/index.php?r=integracao%2Fcadastrar-cliente', $clienteSadeno)->json();
 
         $cpf = str_replace(['.'], '', $proposta->cliente->cpf);
         $cpf = str_replace('-', '', $cpf);
@@ -297,7 +297,7 @@ class PropostaController extends Controller
           "DataAssinatura"  => Carbon::now()->format('d/m/Y'),
           "Plano"  => $Plano
     ];
-        $sendContratoSadeno = Http::withoutVerifying()->post('https://hmg.sadeno.qualityfrotas.com.br/index.php?r=integracao%2Fcadastrar-contrato-assinatura', $contratoSadeno)->json();
+        $sendContratoSadeno = Http::withoutVerifying()->post('https://sadeno.qualityfrotas.com.br/index.php?r=integracao%2Fcadastrar-contrato-assinatura', $contratoSadeno)->json();
 
 
         if ($sendContratoSadeno['status'] == 5) {
