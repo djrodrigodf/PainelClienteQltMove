@@ -14,7 +14,7 @@ class CreatePlanoRegrasTable extends Migration
     public function up()
     {
         Schema::create('plano_regras', function (Blueprint $table) {
-            $table->bigIncrements('id');$table->bigIncrements('id');
+            $table->bigIncrements('id');
             $table->integer('vigencia');
             $table->decimal('valor', 15, 2);
             $table->integer('desconto');

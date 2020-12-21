@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyClienteRequest;
 use App\Http\Requests\StoreClienteRequest;
 use App\Http\Requests\UpdateClienteRequest;
+use App\Models\Anexo;
 use App\Models\Cliente;
 use App\Models\Plano;
 use App\Models\PlanoRegra;
@@ -109,6 +110,36 @@ class ClienteController extends Controller
                 'plano_id' => $proposta->plano->id,
             ];
             PlanoRegra::create($Plano);
+
+            $extension = $request->CNHAnexo->getClientOriginalExtension();
+            $name = uniqid();
+            $nameFile = "{$name}.{$extension}";
+            $upload = $request->CNHAnexo->storeAs("public\\documentos\\$proposta->id", $nameFile);
+            $request['proposta_id'] = $proposta->id;
+            $request['anexo'] = $nameFile;
+
+            $anexos = [
+                'proposta_id' => $proposta->id,
+                'tipo' => 'CNH',
+                'descricao' => '--',
+                'anexo' => $nameFile,
+            ];
+            Anexo::create($anexos);
+
+            $extension = $request->AnaliseF->getClientOriginalExtension();
+            $name = uniqid();
+            $nameFile = "{$name}.{$extension}";
+            $upload = $request->AnaliseF->storeAs("public\\documentos\\$proposta->id", $nameFile);
+            $request['proposta_id'] = $proposta->id;
+            $request['anexo'] = $nameFile;
+
+            $anexos = [
+                'proposta_id' => $proposta->id,
+                'tipo' => 'Analise Financeira',
+                'descricao' => '--',
+                'anexo' => $nameFile,
+            ];
+            Anexo::create($anexos);
 
             return redirect()->route('admin.clientes.index');
         }

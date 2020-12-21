@@ -6,6 +6,7 @@
 
         @include('admin.clientes.create_dados_planos')
         @include('admin.clientes.create_dados_cliente')
+        @include('admin.clientes.create_dados_anexos')
         @include('admin.clientes.create_dados_endereco')
         @include('admin.clientes.create_dados_profissionais')
         @include('admin.clientes.create_dados_referencias')
@@ -31,7 +32,10 @@
 
     <script>
 
-
+        $(".custom-file-input").on("change", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
 
         $('#CadastroDeProposta').validate({
             invalidHandler: function(form, validator) {
@@ -80,6 +84,8 @@
                 complemento: "required",
                 email: "required",
                 tel_celular: "required",
+                AnaliseF: "required",
+                CNHAnexo: "required",
             },
             messages: {
                 valor_plano: "Selecione um Plano",
@@ -96,6 +102,8 @@
                 complemento: "Compelemento do Endereço obrigatório",
                 email: "Email obrigatório",
                 tel_celular: "Celular obrigatório",
+                AnaliseF: "Analise financeira obrigatório",
+                CNHAnexo: "Anexo da CNH obrigatório",
             }
         });
 
