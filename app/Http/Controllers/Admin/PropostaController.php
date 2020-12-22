@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Anexo;
 use App\Models\Cliente;
 use App\Models\Credito;
+use App\Models\FrtImplantacao;
+use App\Models\FrtPrecificacao;
 use App\Models\Pagamento;
 use App\Models\Plano;
 use App\Models\PlanoRegra;
@@ -15,6 +17,7 @@ use App\Models\VwVeiculosDisponiveis;
 use Gate;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -250,7 +253,7 @@ class PropostaController extends Controller
             "ConteudoAnexoCNH" => "data:image/PNG;base64, FAKE",
             "Responsavel" => ""
         ];
-        $sendClientSadeno = Http::withoutVerifying()->post('https://sadeno.qualityfrotas.com.br/index.php?r=integracao%2Fcadastrar-cliente', $clienteSadeno)->json();
+        $sendClientSadeno = Http::withoutVerifying()->post('https://hmg.sadeno.qualityfrotas.com.br/index.php?r=integracao%2Fcadastrar-cliente', $clienteSadeno)->json();
 
         $cpf = str_replace(['.'], '', $proposta->cliente->cpf);
         $cpf = str_replace('-', '', $cpf);
@@ -278,7 +281,7 @@ class PropostaController extends Controller
             "DataInicioVigencia" => Carbon::now()->format('d/m/Y'),
             "DataFimVigencia" => Carbon::now()->addMonths((int)$proposta->plano->periodo)->format('d/m/Y'),
             "CodigoCPFCliente" => $cpf,
-            "CodigoModelo" => 1025,
+            "CodigoModelo" => 1024,
             "CodigoFormaPagamento" => 1,
             "CodigoTipoMedicao" => 3,
             "CodigoTipoRetencao" => 1,
@@ -297,7 +300,26 @@ class PropostaController extends Controller
           "DataAssinatura"  => Carbon::now()->format('d/m/Y'),
           "Plano"  => $Plano
     ];
-        $sendContratoSadeno = Http::withoutVerifying()->post('https://sadeno.qualityfrotas.com.br/index.php?r=integracao%2Fcadastrar-contrato-assinatura', $contratoSadeno)->json();
+        $sendContratoSadeno = Http::withoutVerifying()->post('https://hmg.sadeno.qualityfrotas.com.br/index.php?r=integracao%2Fcadastrar-contrato-assinatura', $contratoSadeno)->json();
+
+        $contratoSadeno = DB::connection('mysqlSadeno')->table('sdn_frt_contrato')->where('ID', '=', $sendContratoSadeno['data']['CodigoContrato'])->first();
+
+        $precificacao = FrtPrecificacao::CriarPrecificacao($contratoSadeno->IDCliente, $contratoSadeno->Codigo);
+
+        $Implantacao = new FrtImplantacao();
+        $Implantacao->IDPrecificacao = $precificacao->id;
+        $Implantacao->IDContrato = $sendContratoSadeno['data']['CodigoContrato'];
+        $Implantacao->IDTipo = 4;
+        $Implantacao->IDStatus = 1;
+        $Implantacao->IDFilial = 1;
+        $Implantacao->IDCliente = $contratoSadeno->IDCliente;
+        //$Implantacao->IDContato = ;
+        $Implantacao->CriadoEm = Carbon::now();
+        $Implantacao->CriadoPor = 1;
+        $Implantacao->AlteradoEm = Carbon::now();
+        $Implantacao->AlteradoPor = 1;
+        $Implantacao->IDCategoria = 2;
+        $Implantacao->save();
 
 
         if ($sendContratoSadeno['status'] == 5) {
