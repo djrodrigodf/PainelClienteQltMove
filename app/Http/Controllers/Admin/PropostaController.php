@@ -132,7 +132,7 @@ class PropostaController extends Controller
 
     public function AddImplantacao(Request $request) {
 
-        $vendas = Venda::where('proposta_id', $request->id)->get();
+        $vendas = Venda::where('proposta_id', $request->id)->where('item', 'Assinatura')->get();
         $debito = 0;
         foreach ($vendas as $v) {
             $debito += Venda::ValidarVenda($v->id, $v->valor);
@@ -167,7 +167,7 @@ class PropostaController extends Controller
 
     public function AddVeiculo(Request $request)
     {
-        $vendas = Venda::where('proposta_id', $request->id)->get();
+        $vendas = Venda::where('proposta_id', $request->id)->where('item', 'Assinatura')->get();
         $debito = 0;
         foreach ($vendas as $v) {
             $debito += Venda::ValidarVenda($v->id, $v->valor);
