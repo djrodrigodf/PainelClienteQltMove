@@ -6,16 +6,17 @@ use App\Http\Controllers\Controller;
 use App\Models\Anexo;
 use App\Models\Cliente;
 use App\Models\Credito;
+use App\Models\FrtContratoAvulsoVeiculo;
 use App\Models\FrtImplantacao;
 use App\Models\FrtPrecificacao;
+use App\Models\FrtVeiculo;
 use App\Models\Pagamento;
 use App\Models\Plano;
 use App\Models\PlanoRegra;
 use App\Models\Proposta;
 use App\Models\Venda;
-use App\Models\VwVeiculosDisponiveis;
-use Gate;
 use Carbon\Carbon;
+use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
@@ -69,6 +70,20 @@ class PropostaController extends Controller
         $planoRegra = PlanoRegra::where('proposta_id', $proposta->id)->first();
         $vendas = Venda::where('proposta_id', $proposta->id)->get();
         $anexos = Anexo::where('proposta_id', $proposta->id)->get();
+        $ContratoAvulsoSadeno = null;
+        $Veiculo = null;
+        $implantacao = null;
+        if ($proposta->contratoSadeno) {
+            $ContratoSadeno = DB::connection('mysqlSadeno')->table('sdn_frt_contrato')->where('ID', '=', $proposta->contratoSadeno)->first();
+            $ContratoAvulsoSadeno = DB::connection('mysqlSadeno')->table('sdn_frt_contrato_avulso')->where('ID', '=', $ContratoSadeno->IDContratoAvulso)->first();
+            $contatoAvulsoVeiculo = DB::connection('mysqlSadeno')->table('sdn_frt_contrato_avulso_veiculo')->where('IDContratoAvulso', '=', $ContratoAvulsoSadeno->ID)->first();
+            if ($contatoAvulsoVeiculo) {
+                $Veiculo = DB::connection('mysqlSadeno')->table('sdn_vw_frt_veiculo')
+                    ->where('ID', '=', $contatoAvulsoVeiculo->IDVeiculo)
+                    ->first();
+            }
+            $implantacao = DB::connection('mysqlSadeno')->table('sdn_vw_frt_implantacao')->where('Codigo', '=', $ContratoSadeno->Codigo)->first();
+        }
 
         $temProposta = false;
 
@@ -78,7 +93,7 @@ class PropostaController extends Controller
             }
         }
 
-        return view('admin.propostas.show', compact('proposta', 'credito', 'planoRegra', 'vendas', 'anexos', 'temProposta'));
+        return view('admin.propostas.show', compact('proposta', 'credito', 'planoRegra', 'vendas', 'anexos', 'temProposta', 'ContratoAvulsoSadeno', 'Veiculo', 'implantacao'));
     }
 
     /**
@@ -115,15 +130,67 @@ class PropostaController extends Controller
         //
     }
 
+    public function AddImplantacao(Request $request) {
+        $proposta = Proposta::find($request->id);
+        $ContratoSadeno = DB::connection('mysqlSadeno')->table('sdn_frt_contrato')->where('ID', '=', $proposta->contratoSadeno)->first();
+
+        $precificacao = FrtPrecificacao::CriarPrecificacao($ContratoSadeno->IDCliente, $ContratoSadeno->Codigo);
+
+        $Implantacao = new FrtImplantacao();
+        $Implantacao->IDPrecificacao = $precificacao->id;
+        $Implantacao->IDContrato = $ContratoSadeno->ID;
+        $Implantacao->IDTipo = 4;
+        $Implantacao->IDStatus = 1;
+        $Implantacao->IDFilial = 1;
+        $Implantacao->IDCliente = $ContratoSadeno->IDCliente;
+        //$Implantacao->IDContato = ;
+        $Implantacao->CriadoEm = Carbon::now();
+        $Implantacao->CriadoPor = 1;
+        $Implantacao->AlteradoEm = Carbon::now();
+        $Implantacao->AlteradoPor = 1;
+        $Implantacao->IDCategoria = 2;
+        $Implantacao->save();
+
+        return redirect()->back()->with('messages', 'Implantação Solicitada com sucesso!');
+    }
+
+    public function AddVeiculo(Request $request)
+    {
+        $proposta = Proposta::find($request->id);
+        $ContratoSadeno = DB::connection('mysqlSadeno')->table('sdn_frt_contrato')->where('ID', '=', $proposta->contratoSadeno)->first();
+        $ContratoAvulsoSadeno = DB::connection('mysqlSadeno')->table('sdn_frt_contrato_avulso')->where('ID', '=', $ContratoSadeno->IDContratoAvulso)->first();
+        $contatoAvulsoVeiculo = DB::connection('mysqlSadeno')->table('sdn_frt_contrato_avulso_veiculo')->where('IDContratoAvulso', '=', $ContratoAvulsoSadeno->ID)->first();
+        $Veiculo = null;
+        $planoAssinado = PlanoRegra::where('proposta_id', $proposta->id)->orderBy('id', 'desc')->first();
+        if ($contatoAvulsoVeiculo) {
+            $Veiculo = DB::connection('mysqlSadeno')
+                ->table('sdn_vw_frt_veiculo')
+                ->where('ID', '=', $contatoAvulsoVeiculo->IDVeiculo)->first();
+        }
+
+        $addVeiculo = new FrtContratoAvulsoVeiculo();
+        $addVeiculo->IDContratoAvulso = $ContratoAvulsoSadeno->ID;
+        $addVeiculo->IDVeiculo = $request->idVeiculo;
+        $addVeiculo->ValorLocacao = $planoAssinado->valor;
+        $addVeiculo->CriadoEm = Carbon::now();
+        $addVeiculo->CriadoPor = 1;
+        $addVeiculo->AlteradoEm = Carbon::now();
+        $addVeiculo->AlteradoPor = 1;
+        $addVeiculo->save();
+
+        $blockVeiculo = FrtVeiculo::where('ID', $request->idVeiculo)->update(['IDStatusOperacional' => 2]);
+
+        return redirect()->back();
+    }
+
     public function aprovar(Request $request)
     {
 
         $proposta = Proposta::find($request->id);
 
-        if ($request->valor_aprovado < $proposta->valor_plano  ) {
+        if ($request->valor_aprovado < $proposta->valor_plano) {
 
             return redirect()->back()->with('error', 'Valor de aprovado não pode ser menor que o valor solicitado');
-
         }
 
         $proposta->status_id = 3;
@@ -169,7 +236,7 @@ class PropostaController extends Controller
     {
         $proposta = Proposta::find($id);
         $credito = Credito::where('cliente_id', $proposta->cliente_id)->first();
-        $planos = Plano::where('ativo',1)->where('r_tres', '<=', $credito->valor_aprovado)->groupBy('veiculo')->get();
+        $planos = Plano::where('ativo', 1)->where('r_tres', '<=', $credito->valor_aprovado)->groupBy('veiculo')->get();
 
         return view('admin.propostas.ajustar_plano', compact('proposta', 'planos', 'id', 'credito'));
     }
@@ -198,16 +265,16 @@ class PropostaController extends Controller
         $buscaPlanoRegra = PlanoRegra::where('proposta_id', $proposta->id)->first();
 
         $Plano = [
-            'vigencia' => (int)$proposta->plano->periodo,
+            'vigencia' => (int) $proposta->plano->periodo,
             'valor' => $proposta->valor_plano,
             'desconto' => 0,
-            'diaria' => number_format((float)$proposta->valor_plano / 30, 2, '.', ''),
+            'diaria' => number_format((float) $proposta->valor_plano / 30, 2, '.', ''),
             'caucao' => 1000,
             'participacaoColisao' => 1700,
             'participacaoTerceiro' => 1700,
             'participacaoRoubo' => 3800,
             'kmExedente' => 0,
-            'QtdKmFranquiaMensalPadrao' => (int)$proposta->plano->km,
+            'QtdKmFranquiaMensalPadrao' => (int) $proposta->plano->km,
             'proposta_id' => $proposta->id,
             'plano_id' => $proposta->plano->id,
         ];
@@ -251,7 +318,7 @@ class PropostaController extends Controller
             "DataValidadeCNH" => $proposta->cliente->dt_validade_cnh,
             "NomeAnexoCNH" => "data:image/PNG;base64, FAKE",
             "ConteudoAnexoCNH" => "data:image/PNG;base64, FAKE",
-            "Responsavel" => ""
+            "Responsavel" => "",
         ];
         $sendClientSadeno = Http::withoutVerifying()->post('https://hmg.sadeno.qualityfrotas.com.br/index.php?r=integracao%2Fcadastrar-cliente', $clienteSadeno)->json();
 
@@ -259,16 +326,16 @@ class PropostaController extends Controller
         $cpf = str_replace('-', '', $cpf);
 
         $Plano = [
-            'vigencia' => (int)$proposta->plano->periodo,
+            'vigencia' => (int) $proposta->plano->periodo,
             'valor' => $proposta->valor_plano,
             'desconto' => 0,
-            'diaria' => number_format((float)$proposta->valor_plano / 30, 2, '.', ''),
+            'diaria' => number_format((float) $proposta->valor_plano / 30, 2, '.', ''),
             'caucao' => 1000,
             'participacaoColisao' => 1700,
             'participacaoTerceiro' => 1700,
             'participacaoRoubo' => 3800,
             'kmExedente' => 0,
-            'QtdKmFranquiaMensalPadrao' => (int)$proposta->plano->km,
+            'QtdKmFranquiaMensalPadrao' => (int) $proposta->plano->km,
             'proposta_id' => $proposta->id,
             'plano_id' => $proposta->plano->id,
             'kmDiario' => 0,
@@ -279,7 +346,7 @@ class PropostaController extends Controller
         $contratoSadeno = [
             "CodigoAcesso" => "a17aff74804c0077e53b51610b40521de2291cbb",
             "DataInicioVigencia" => Carbon::now()->format('d/m/Y'),
-            "DataFimVigencia" => Carbon::now()->addMonths((int)$proposta->plano->periodo)->format('d/m/Y'),
+            "DataFimVigencia" => Carbon::now()->addMonths((int) $proposta->plano->periodo)->format('d/m/Y'),
             "CodigoCPFCliente" => $cpf,
             "CodigoModelo" => 1024,
             "CodigoFormaPagamento" => 1,
@@ -290,37 +357,36 @@ class PropostaController extends Controller
             "DiaFaturamento" => 1,
             "DiaVencimento" => 1,
             "IDVeiculoSadeno" => null,
-            "idAppdriver" => (string)$proposta->id,
+            "idAppdriver" => (string) $proposta->id,
             "DataPagamento" => Carbon::now()->format('d/m/Y'),
             "LocalDeRetirada" => "SAGA",
             "DataHoraRetirada" => Carbon::now(),
             "LocalDeDevolucao" => "SAGA",
-            "DataHoraDevolucao" => Carbon::now()->addMonths((int)$proposta->plano->periodo),
+            "DataHoraDevolucao" => Carbon::now()->addMonths((int) $proposta->plano->periodo),
             "ValoLocacao" => $proposta->valor_plano,
-          "DataAssinatura"  => Carbon::now()->format('d/m/Y'),
-          "Plano"  => $Plano
-    ];
+            "DataAssinatura" => Carbon::now()->format('d/m/Y'),
+            "Plano" => $Plano,
+        ];
         $sendContratoSadeno = Http::withoutVerifying()->post('https://hmg.sadeno.qualityfrotas.com.br/index.php?r=integracao%2Fcadastrar-contrato-assinatura', $contratoSadeno)->json();
 
-        $contratoSadeno = DB::connection('mysqlSadeno')->table('sdn_frt_contrato')->where('ID', '=', $sendContratoSadeno['data']['CodigoContrato'])->first();
+        //$contratoSadeno = DB::connection('mysqlSadeno')->table('sdn_frt_contrato')->where('ID', '=', $sendContratoSadeno['data']['CodigoContrato'])->first();
 
-        $precificacao = FrtPrecificacao::CriarPrecificacao($contratoSadeno->IDCliente, $contratoSadeno->Codigo);
+        //$precificacao = FrtPrecificacao::CriarPrecificacao($contratoSadeno->IDCliente, $contratoSadeno->Codigo);
 
-        $Implantacao = new FrtImplantacao();
-        $Implantacao->IDPrecificacao = $precificacao->id;
-        $Implantacao->IDContrato = $sendContratoSadeno['data']['CodigoContrato'];
-        $Implantacao->IDTipo = 4;
-        $Implantacao->IDStatus = 1;
-        $Implantacao->IDFilial = 1;
-        $Implantacao->IDCliente = $contratoSadeno->IDCliente;
-        //$Implantacao->IDContato = ;
-        $Implantacao->CriadoEm = Carbon::now();
-        $Implantacao->CriadoPor = 1;
-        $Implantacao->AlteradoEm = Carbon::now();
-        $Implantacao->AlteradoPor = 1;
-        $Implantacao->IDCategoria = 2;
-        $Implantacao->save();
-
+        //$Implantacao = new FrtImplantacao();
+        //$Implantacao->IDPrecificacao = $precificacao->id;
+        //$Implantacao->IDContrato = $sendContratoSadeno['data']['CodigoContrato'];
+        //$Implantacao->IDTipo = 4;
+        //$Implantacao->IDStatus = 1;
+        //$Implantacao->IDFilial = 1;
+        //$Implantacao->IDCliente = $contratoSadeno->IDCliente;
+        ////$Implantacao->IDContato = ;
+        //$Implantacao->CriadoEm = Carbon::now();
+        //$Implantacao->CriadoPor = 1;
+        //$Implantacao->AlteradoEm = Carbon::now();
+        //$Implantacao->AlteradoPor = 1;
+        //$Implantacao->IDCategoria = 2;
+        //$Implantacao->save();
 
         if ($sendContratoSadeno['status'] == 5) {
             $proposta->status_id = 4;
@@ -340,10 +406,10 @@ class PropostaController extends Controller
                             'type' => 'CELL_PHONE',
                             'number' => '55'.str_replace(['(', ')', '-', ' '], '', $proposta->cliente->tel_celular),
                         ],
-                    ]
+                    ],
                 ],
                 'opportunity' => [
-                    'title' => 'Proposta Assinada - ' . $proposta->plano->veiculo . ' - ' . $proposta->plano->marca . ' - ' . $proposta->plano->versao,
+                    'title' => 'Proposta Assinada - '.$proposta->plano->veiculo.' - '.$proposta->plano->marca.' - '.$proposta->plano->versao,
                     'price' => floatval($proposta->valor_plano * $proposta->plano->periodo),
                     'temperature' => 'HOT',
                     'fields' => [
@@ -354,9 +420,9 @@ class PropostaController extends Controller
                         10544 => $proposta->plano->prazo,
                         9939 => floatval($proposta->valor_plano),
                         10582 => $sendContratoSadeno['mensagem'],
-                        10583 => $proposta->plano->veiculo . ' - ' . $proposta->plano->marca . ' - ' . $proposta->plano->versao
-                    ]
-                ]
+                        10583 => $proposta->plano->veiculo.' - '.$proposta->plano->marca.' - '.$proposta->plano->versao,
+                    ],
+                ],
             ];
 
             $lead = Http::withoutVerifying()->withBasicAuth('sistemas@qualityfrotas.com.br', 'K)#n3guinha')->post('https://api.leadstation.com.br/api/v1/apikeys/oZjVlmgdJBOB772GYPnB/customers/opportunities', $leadStation);
@@ -366,11 +432,11 @@ class PropostaController extends Controller
             $updateStatus = [
                 'id' => $idLead,
                 'phase' => [
-                    "id" => 3303
-                ]
+                    "id" => 3303,
+                ],
             ];
 
-            $leadProp = Http::withoutVerifying()->withBasicAuth('sistemas@qualityfrotas.com.br', 'K)#n3guinha')->patch('https://app.leadstation.com.br/api/v1/opportunities/' . $idLead, $updateStatus)->json();
+            $leadProp = Http::withoutVerifying()->withBasicAuth('sistemas@qualityfrotas.com.br', 'K)#n3guinha')->patch('https://app.leadstation.com.br/api/v1/opportunities/'.$idLead, $updateStatus)->json();
 
             $criarVenda = new Venda();
             $criarVenda->proposta_id = $proposta->id;
@@ -406,8 +472,7 @@ class PropostaController extends Controller
                     'email' => $proposta->cliente->email,
                 ],
                 'splits' => [
-                    0 => [
-                    ],
+                    0 => [],
                 ],
                 'due_date' => Carbon::now()->format('Y-m-d'),
                 'email' => $proposta->cliente->email,
@@ -433,26 +498,24 @@ class PropostaController extends Controller
             $salvarCobranca->save();
 
             return redirect()->route('admin.clientes.index');
-
         }
-
     }
 
-    public function imprimirProposta(Request $request, $id) {
+    public function imprimirProposta(Request $request, $id)
+    {
 
         $auth = base64_encode("jasperadmin:jasperadmin");
         $context = stream_context_create([
             "http" => [
-                "header" => "Authorization: Basic $auth"
-            ]
+                "header" => "Authorization: Basic $auth",
+            ],
         ]);
-        $filename = "Proposta-$id-" . Carbon::now()->format('dmyHi');
-        $data = file_get_contents('http://10.2.5.86:8080/jasperserver/rest_v2/reports/reports/assinatura/Contrato.pdf?Contrato=' . $id, false, $context );
+        $filename = "Proposta-$id-".Carbon::now()->format('dmyHi');
+        $data = file_get_contents('http://10.2.5.86:8080/jasperserver/rest_v2/reports/reports/assinatura/Contrato.pdf?Contrato='.$id, false, $context);
 
         header("Content-type: application/octet-stream");
         header("Content-disposition: attachment;filename=$filename.pdf");
 
         return $data;
-
     }
 }
