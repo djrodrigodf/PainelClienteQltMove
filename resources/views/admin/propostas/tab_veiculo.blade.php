@@ -50,12 +50,9 @@
                     </table>
                 </div>
             @endif
-
             @if ($implantacao && !$Veiculo)
                 <h2>Implantação {{$implantacao->ID}} - {{$implantacao->Status}}</h2>
             @endif
-
-
         </div>
     </div>
 

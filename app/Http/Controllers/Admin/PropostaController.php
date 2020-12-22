@@ -369,24 +369,6 @@ class PropostaController extends Controller
         ];
         $sendContratoSadeno = Http::withoutVerifying()->post('https://hmg.sadeno.qualityfrotas.com.br/index.php?r=integracao%2Fcadastrar-contrato-assinatura', $contratoSadeno)->json();
 
-        //$contratoSadeno = DB::connection('mysqlSadeno')->table('sdn_frt_contrato')->where('ID', '=', $sendContratoSadeno['data']['CodigoContrato'])->first();
-
-        //$precificacao = FrtPrecificacao::CriarPrecificacao($contratoSadeno->IDCliente, $contratoSadeno->Codigo);
-
-        //$Implantacao = new FrtImplantacao();
-        //$Implantacao->IDPrecificacao = $precificacao->id;
-        //$Implantacao->IDContrato = $sendContratoSadeno['data']['CodigoContrato'];
-        //$Implantacao->IDTipo = 4;
-        //$Implantacao->IDStatus = 1;
-        //$Implantacao->IDFilial = 1;
-        //$Implantacao->IDCliente = $contratoSadeno->IDCliente;
-        ////$Implantacao->IDContato = ;
-        //$Implantacao->CriadoEm = Carbon::now();
-        //$Implantacao->CriadoPor = 1;
-        //$Implantacao->AlteradoEm = Carbon::now();
-        //$Implantacao->AlteradoPor = 1;
-        //$Implantacao->IDCategoria = 2;
-        //$Implantacao->save();
 
         if ($sendContratoSadeno['status'] == 5) {
             $proposta->status_id = 4;
@@ -497,8 +479,88 @@ class PropostaController extends Controller
             $salvarCobranca->venda_id = $criarVenda->id;
             $salvarCobranca->save();
 
+            $criarVenda = new Venda();
+            $criarVenda->proposta_id = $proposta->id;
+            $criarVenda->valor = $Plano['caucao'];
+            $criarVenda->descricao = 'Pagamento Caução';
+            $criarVenda->item = 'Caução';
+            $criarVenda->dataVenda = Carbon::now();
+            $criarVenda->dataFaturamento = Carbon::now();
+            $criarVenda->ativo = 1;
+            $criarVenda->save();
+
             return redirect()->route('admin.clientes.index');
         }
+    }
+
+    public function GerarCobranca(Request $request) {
+        $proposta = Proposta::find($request->id);
+
+        $cpf = str_replace(['.'], '', $proposta->cliente->cpf);
+        $cpf = str_replace('-', '', $cpf);
+
+        $DataVencimento = $request->dataVencimento;
+        $validDate = $DataVencimento >= Carbon::now()->format('Y-m-d');
+        $valor = $request->valor;
+        $valor = str_replace('.', '', $valor);
+        $valor = str_replace(',', '.', $valor);
+        $valor = number_format($valor, 2, '', '');
+        $valor = $valor / 100;
+
+        if (!$validDate) {
+            return redirect()->back()->with('error', 'Data de vencimento não pode ser inferior ao dia atual');
+        }
+
+        $cobranca = [
+            'ensure_workday_due_date' => true,
+            'items' => [
+                0 => [
+                    'description' => $request->descricao_cobranca,
+                    'quantity' => 1,
+                    'price_cents' => str_replace('.', '', $valor),
+                ],
+            ],
+            'payer' => [
+                'address' => [
+                    'zip_code' => str_replace('-', '', $proposta->cliente->cep),
+                    'street' => $proposta->cliente->endereco,
+                    'city' => $proposta->cliente->cidade,
+                    'state' => $proposta->cliente->estado,
+                    'number' => $proposta->cliente->complemento,
+                    'district' => $proposta->cliente->bairro,
+                    'country' => 'brasil',
+                ],
+                'name' => $proposta->cliente->nome_completo,
+                'cpf_cnpj' => $cpf,
+                'email' => $proposta->cliente->email,
+            ],
+            'splits' => [
+                0 => [],
+            ],
+            'due_date' => Carbon::parse($DataVencimento)->format('Y-m-d'),
+            'email' => $proposta->cliente->email,
+            'payable_with' => 'all',
+        ];
+
+        $gerarCobranca = Http::post('https://api.iugu.com/v1/invoices?api_token=4403cd61ce8f5c55ea93497e4c6ca6a9', $cobranca)->json();
+
+        $salvarCobranca = new Pagamento();
+        $salvarCobranca->valor = $valor;
+        $salvarCobranca->valorPago = 0;
+        $salvarCobranca->dataVencimento = $DataVencimento;
+        $salvarCobranca->dataEmissao = Carbon::now();
+//            $salvarCobranca->dataPagamento = ;
+        $salvarCobranca->ativo = 1;
+        $salvarCobranca->tipo = "Pagamento Online";
+        $salvarCobranca->taxas = 0;
+        $salvarCobranca->multa = 0;
+        $salvarCobranca->desconto = 0;
+//            $salvarCobranca->dadosBoleto = ;
+        $salvarCobranca->gateway = json_encode($gerarCobranca);
+        $salvarCobranca->venda_id = $request->IDVenda;
+        $salvarCobranca->save();
+
+        return redirect()->back()->with('message', 'Cobrança gerada com sucesso!');
     }
 
     public function imprimirProposta(Request $request, $id)

@@ -35,6 +35,10 @@
                         <tr class="p">
                             <td colspan="6" class="hiddenRow">
                                 <div class="accordian-body collapse p-3" id="venda{{$v->id}}">
+                                    <div class="d-flex justify-content-end mb-3">
+                                        <a href="#" data-toggle="modal" data-target="#gerarCobrancaModal{{$v->id}}" class="btn btn-success btn-sm"><i class="fas fa-plus"></i></a>
+                                        @include('admin.propostas.modal_gerar_cobranca')
+                                    </div>
                                     <table class="table table-responsive-sm table-borderless">
                                         <thead>
                                         <th>PAGAMENTO</th>

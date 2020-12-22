@@ -59,6 +59,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('proposta/imprimirProposta/{id}', 'PropostaController@imprimirProposta')->name('imprimir_proposta');
     Route::post('proposta/addVeiculo', 'PropostaController@AddVeiculo')->name('add_veiculo');
     Route::post('proposta/addImplantacao', 'PropostaController@AddImplantacao')->name('add_implantacao');
+    Route::post('proposta/GerarCobranca', 'PropostaController@GerarCobranca')->name('gerar_cobranca');
 
     Route::get('anexos/deletar/{id}', 'AnexoController@destroy')->name('deletarAnexo');
     Route::resource('anexos', 'AnexoController');

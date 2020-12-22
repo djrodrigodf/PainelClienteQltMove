@@ -47,7 +47,8 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="dt_emissao_rg">{{ trans('cruds.cliente.fields.dt_emissao_rg') }}</label>
-                    <input class="form-control date {{ $errors->has('dt_emissao_rg') ? 'is-invalid' : '' }}" type="text" name="dt_emissao_rg" id="dt_emissao_rg" value="{{ old('dt_emissao_rg') }}">
+                    <input class="form-control" required id="date-input dt_emissao_rg" type="date" name="dt_emissao_rg" placeholder="date">
+
                     @if($errors->has('dt_emissao_rg'))
                         <div class="invalid-feedback">
                             {{ $errors->first('dt_emissao_rg') }}
@@ -59,7 +60,7 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="dt_nasc">{{ trans('cruds.cliente.fields.dt_nasc') }}</label>
-                    <input class="form-control date {{ $errors->has('dt_nasc') ? 'is-invalid' : '' }}" type="text" name="dt_nasc" id="dt_nasc" value="{{ old('dt_nasc') }}">
+                    <input class="form-control" required id="date-input dt_nasc" type="date" name="dt_nasc" placeholder="date">
                     @if($errors->has('dt_nasc'))
                         <div class="invalid-feedback">
                             {{ $errors->first('dt_nasc') }}
@@ -85,7 +86,7 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="dt_validade_cnh">{{ trans('cruds.cliente.fields.dt_validade_cnh') }}</label>
-                    <input class="form-control date {{ $errors->has('dt_validade_cnh') ? 'is-invalid' : '' }}" type="text" name="dt_validade_cnh" id="dt_validade_cnh" value="{{ old('dt_validade_cnh') }}">
+                    <input class="form-control" required id="date-input dt_validade_cnh" type="date" name="dt_validade_cnh" placeholder="date">
                     @if($errors->has('dt_validade_cnh'))
                         <div class="invalid-feedback">
                             {{ $errors->first('dt_validade_cnh') }}

@@ -115,4 +115,8 @@
             $(this).next('tr').find('.hiddenRow').show();
         });
     </script>
+
+    <script>
+        $('.dinheiro').mask("#.##0,00");
+    </script>
 @endsection
