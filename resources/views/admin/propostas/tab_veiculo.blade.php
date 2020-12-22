@@ -51,7 +51,7 @@
                 </div>
             @endif
 
-            @if ($implantacao)
+            @if ($implantacao && !$Veiculo)
                 <h2>Implantação {{$implantacao->ID}} - {{$implantacao->Status}}</h2>
             @endif
 
