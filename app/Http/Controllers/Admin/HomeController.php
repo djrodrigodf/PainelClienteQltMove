@@ -10,10 +10,6 @@ class HomeController
 {
     public function index()
     {
-
-        $contratoSadeno = DB::connection('mysqlSadeno')->table('sdn_frt_contrato')->where('ID', '=', 1737)->first();
-        dd($contratoSadeno);
-
         return view('home');
     }
 
