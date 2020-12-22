@@ -29,22 +29,6 @@ class StoreClienteRequest extends FormRequest
                 'string',
                 'nullable',
             ],
-            'dt_emissao_rg'             => [
-                'date_format:' . config('panel.date_format'),
-                'nullable',
-            ],
-            'dt_nasc'                   => [
-                'date_format:' . config('panel.date_format'),
-                'nullable',
-            ],
-            'cnh'                       => [
-                'string',
-                'nullable',
-            ],
-            'dt_validade_cnh'           => [
-                'date_format:' . config('panel.date_format'),
-                'nullable',
-            ],
             'nacionalidade'             => [
                 'string',
                 'nullable',
@@ -153,10 +137,7 @@ class StoreClienteRequest extends FormRequest
                 'string',
                 'nullable',
             ],
-            'prof_data_de_admissao'     => [
-                'date_format:' . config('panel.date_format'),
-                'nullable',
-            ],
+
             'prof_porte_da_empresa'     => [
                 'string',
                 'nullable',

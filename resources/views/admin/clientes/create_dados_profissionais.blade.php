@@ -128,7 +128,7 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="prof_data_de_admissao">{{ trans('cruds.cliente.fields.prof_data_de_admissao') }}</label>
-                    <input class="form-control" required id="date-input prof_data_de_admissao" type="date" name="prof_data_de_admissao" placeholder="date">
+                    <input class="form-control" id="date-input prof_data_de_admissao" type="date" name="prof_data_de_admissao" placeholder="date">
                     @if($errors->has('prof_data_de_admissao'))
                         <div class="invalid-feedback">
                             {{ $errors->first('prof_data_de_admissao') }}

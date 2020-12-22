@@ -14,6 +14,7 @@ use App\Models\Proposta;
 use App\Models\ReferenciaBancarium;
 use App\Models\ReferenciaPessoal;
 use App\Models\StatusCliente;
+use Carbon\Carbon;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -58,6 +59,10 @@ class ClienteController extends Controller
 
     public function store(StoreClienteRequest $request)
     {
+        $request['dt_emissao_rg'] = Carbon::parse($request['dt_emissao_rg'])->format('d/m/Y');
+        $request['dt_nasc'] = Carbon::parse($request['dt_nasc'])->format('d/m/Y');
+        $request['dt_validade_cnh'] = Carbon::parse($request['dt_validade_cnh'])->format('d/m/Y');
+        $request['prof_data_de_admissao'] = Carbon::parse($request['prof_data_de_admissao'])->format('d/m/Y');
         $dBancarios = [
             'banco_codigo' => $request->ref_banco_codigo,
             'agencia_codigo' => $request->ref_agencia,
