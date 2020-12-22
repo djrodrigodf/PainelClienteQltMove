@@ -74,7 +74,7 @@ class FrtPrecificacao extends Model
         $nova->IDStatus = 1;
         $nova->IDTipo = 2;
         $nova->IDFilial = 1;
-        $nova->IDModelo = 1025;
+        $nova->IDModelo = 1024;
         $nova->ValidadeProposta = Carbon::now()->addMonth();
         $nova->IDStatusProposta = 1;
         $nova->IDCliente = $IDCliente;
