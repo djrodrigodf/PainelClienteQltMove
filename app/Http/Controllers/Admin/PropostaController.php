@@ -167,6 +167,16 @@ class PropostaController extends Controller
 
     public function AddVeiculo(Request $request)
     {
+        $vendas = Venda::where('proposta_id', $request->id)->get();
+        $debito = 0;
+        foreach ($vendas as $v) {
+            $debito += Venda::ValidarVenda($v->id, $v->valor);
+        }
+
+        if ($debito > 0) {
+            return redirect()->back()->with('error', 'Exite cobrança pendente!');
+        }
+
         $proposta = Proposta::find($request->id);
         $ContratoSadeno = DB::connection('mysqlSadeno')->table('sdn_frt_contrato')->where('ID', '=', $proposta->contratoSadeno)->first();
         $ContratoAvulsoSadeno = DB::connection('mysqlSadeno')->table('sdn_frt_contrato_avulso')->where('ID', '=', $ContratoSadeno->IDContratoAvulso)->first();
