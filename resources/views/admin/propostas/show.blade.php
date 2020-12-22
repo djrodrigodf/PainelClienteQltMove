@@ -117,6 +117,6 @@
     </script>
 
     <script>
-        $('.dinheiro').mask("#.##0,00");
+        $('.dinheiro').mask('000.000.000.000.000,00', {reverse: true});
     </script>
 @endsection

@@ -131,6 +131,17 @@ class PropostaController extends Controller
     }
 
     public function AddImplantacao(Request $request) {
+
+        $vendas = Venda::where('proposta_id', $request->id)->get();
+        $debito = 0;
+        foreach ($vendas as $v) {
+            $debito += Venda::ValidarVenda($v->id, $v->valor);
+        }
+
+        if ($debito > 0) {
+            return redirect()->back()->with('error', 'Exite cobrança pendente!');
+        }
+
         $proposta = Proposta::find($request->id);
         $ContratoSadeno = DB::connection('mysqlSadeno')->table('sdn_frt_contrato')->where('ID', '=', $proposta->contratoSadeno)->first();
 
@@ -505,7 +516,6 @@ class PropostaController extends Controller
         $valor = str_replace('.', '', $valor);
         $valor = str_replace(',', '.', $valor);
         $valor = number_format($valor, 2, '', '');
-        $valor = $valor / 100;
 
         if (!$validDate) {
             return redirect()->back()->with('error', 'Data de vencimento não pode ser inferior ao dia atual');
@@ -545,7 +555,7 @@ class PropostaController extends Controller
         $gerarCobranca = Http::post('https://api.iugu.com/v1/invoices?api_token=4403cd61ce8f5c55ea93497e4c6ca6a9', $cobranca)->json();
 
         $salvarCobranca = new Pagamento();
-        $salvarCobranca->valor = $valor;
+        $salvarCobranca->valor = $valor / 100;
         $salvarCobranca->valorPago = 0;
         $salvarCobranca->dataVencimento = $DataVencimento;
         $salvarCobranca->dataEmissao = Carbon::now();
