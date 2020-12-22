@@ -6,11 +6,21 @@
 <div class="card my-3">
     <div class="card-header d-flex justify-content-between">
         <h3>Veiculo</h3>
-        @if ($Veiculo == null && $implantacao == null)
-            <a class="btn btn-success btn-lg" data-toggle="modal" data-target="#veiculoModal" href="#"><i class="fas fa-plus"></i></a>
-        @endif
-
-
+        <div class="d-flex">
+            @if ($Veiculo == null && $implantacao == null)
+                @if (count($meusVeiculos) > 0)
+                <a class="btn btn-success btn-lg" data-toggle="modal" data-target="#veiculoModal" href="#"><i class="fas fa-plus"></i> Vincular Veiculo</a>
+                @endif
+                    <div class="ml-3">
+                        <form method="POST" id="form_implantacao_veiculo" action="{{ route("admin.add_implantacao") }}" enctype="multipart/form-data">
+                            @csrf
+                            <input type="hidden" name="solicitarImplantacao" value="1">
+                            <input type="hidden" name="id" value="{{$proposta->id}}">
+                        </form>
+                        <button type="submit" form="form_veiculo" class="btn btn-success btn-lg"><i class="fas fa-car"></i> Gera Implantação</button>
+                    </div>
+            @endif
+        </div>
 
     </div>
 
