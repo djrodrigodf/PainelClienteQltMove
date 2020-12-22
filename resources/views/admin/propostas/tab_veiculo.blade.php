@@ -17,7 +17,7 @@
                             <input type="hidden" name="solicitarImplantacao" value="1">
                             <input type="hidden" name="id" value="{{$proposta->id}}">
                         </form>
-                        <button type="submit" form="form_veiculo" class="btn btn-success btn-lg"><i class="fas fa-car"></i> Gera Implantação</button>
+                        <button type="submit" form="form_implantacao_veiculo" class="btn btn-success btn-lg"><i class="fas fa-car"></i> Gera Implantação</button>
                     </div>
             @endif
         </div>
