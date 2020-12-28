@@ -51,7 +51,14 @@ class ClienteController extends Controller
 
             return view('admin.clientes.index', compact('clientes', 'status', 'select', 'propostas'));
         } else {
-            $propostas = Proposta::with(['criado_por', 'cliente', 'plano'])->where('criado_por', Auth::user()->id)->get();
+
+            if ($r->id == 4) {
+                $propostas = Proposta::with(['criado_por', 'cliente', 'plano'])->where('criado_por', Auth::user()->id)->get();
+            }
+
+            if ($r->id == 5) {
+                $propostas = Proposta::with(['criado_por', 'cliente', 'plano'])->where('status_id', 1)->get();
+            }
 
             $status = StatusCliente::get();
             $clientes = Cliente::all();
