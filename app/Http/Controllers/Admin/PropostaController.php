@@ -474,16 +474,13 @@ class PropostaController extends Controller
                     'cpf_cnpj' => $cpf,
                     'email' => $proposta->cliente->email,
                 ],
-                'splits' => [
-                    0 => [],
-                ],
                 'due_date' => Carbon::now()->format('Y-m-d'),
                 'email' => $proposta->cliente->email,
                 'payable_with' => 'all',
             ];
 
             $gerarCobranca = Http::post('https://api.iugu.com/v1/invoices?api_token=4403cd61ce8f5c55ea93497e4c6ca6a9', $cobranca)->json();
-
+            
             $salvarCobranca = new Pagamento();
             $salvarCobranca->valor = $proposta->valor_plano;
             $salvarCobranca->valorPago = 0;
