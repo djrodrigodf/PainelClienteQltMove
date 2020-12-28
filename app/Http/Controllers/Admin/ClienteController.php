@@ -17,6 +17,7 @@ use App\Models\StatusCliente;
 use Carbon\Carbon;
 use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
 class ClienteController extends Controller
@@ -25,21 +26,47 @@ class ClienteController extends Controller
     {
         abort_if(Gate::denies('cliente_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $propostas = Proposta::with(['criado_por', 'cliente', 'plano'])->get();
+        $role = false;
 
-        $status = StatusCliente::get();
-        $clientes = Cliente::all();
-        $select = null;
-        if ($request->filtro_status) {
+        foreach (Auth::user()->roles as $r) {
+            if ($r->id == 1 || $r->id == 2 || $r->id == 3) {
+                $role = true;
+            }
+        }
+
+        if ($role) {
+            $propostas = Proposta::with(['criado_por', 'cliente', 'plano'])->get();
+
             $status = StatusCliente::get();
-            $propostas = Proposta::with(['criado_por', 'cliente', 'plano'])->where('status_id', $request->filtro_status)->get();
-            $clientes = Cliente::where('status_id', $request->filtro_status)->get();
-            $select = $request->filtro_status;
+            $clientes = Cliente::all();
+            $select = null;
+            if ($request->filtro_status) {
+                $status = StatusCliente::get();
+                $propostas = Proposta::with(['criado_por', 'cliente', 'plano'])->where('status_id', $request->filtro_status)->get();
+                $clientes = Cliente::where('status_id', $request->filtro_status)->get();
+                $select = $request->filtro_status;
+
+                return view('admin.clientes.index', compact('clientes', 'status', 'select', 'propostas'));
+            }
+
+            return view('admin.clientes.index', compact('clientes', 'status', 'select', 'propostas'));
+        } else {
+            $propostas = Proposta::with(['criado_por', 'cliente', 'plano'])->where('criado_por', Auth::user()->id)->get();
+
+            $status = StatusCliente::get();
+            $clientes = Cliente::all();
+            $select = null;
+            if ($request->filtro_status) {
+                $status = StatusCliente::get();
+                $propostas = Proposta::with(['criado_por', 'cliente', 'plano'])->where('status_id', $request->filtro_status)->get();
+                $clientes = Cliente::where('status_id', $request->filtro_status)->get();
+                $select = $request->filtro_status;
+
+                return view('admin.clientes.index', compact('clientes', 'status', 'select', 'propostas'));
+            }
 
             return view('admin.clientes.index', compact('clientes', 'status', 'select', 'propostas'));
         }
-
-        return view('admin.clientes.index', compact('clientes', 'status', 'select', 'propostas'));
     }
 
     public function create()
