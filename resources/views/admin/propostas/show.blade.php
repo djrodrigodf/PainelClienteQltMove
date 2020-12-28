@@ -10,6 +10,7 @@
         <div class="row d-flex">
             <div class="col-md-6">
                 <h1>Proposta</h1>
+                <span>{{$proposta->status->status}}</span>
             </div>
             <div class="col-md-6 d-flex align-content-center justify-content-end">
                 @if($proposta->status_id == 1 && \Illuminate\Support\Facades\Auth::user()->roles[0]->id == 2 || \Illuminate\Support\Facades\Auth::user()->roles[0]->id == 1)
@@ -26,6 +27,11 @@
                         <a id="contrato" href="{{route('admin.contrato_proposta', $proposta->id)}}" class="btn btn-success my-auto">Assinar Proposta</a>
                     @endif
                 @endif
+
+                    @if ($temContratoAssinado && $proposta->status_id == 4)
+                        <a id="contrato" href="{{route('admin.assinar_contrato', $proposta->id)}}" class="btn btn-success my-auto">Assinar Contrato</a>
+                    @endif
+
             </div>
         </div>
     </div>

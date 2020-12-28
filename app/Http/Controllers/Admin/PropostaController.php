@@ -86,14 +86,18 @@ class PropostaController extends Controller
         }
 
         $temProposta = false;
+        $temContratoAssinado = false;
 
         foreach ($anexos as $a) {
             if ($a->tipo == "Proposta") {
                 $temProposta = true;
             }
+            if ($a->tipo == "Contrato") {
+                $temContratoAssinado = true;
+            }
         }
 
-        return view('admin.propostas.show', compact('proposta', 'credito', 'planoRegra', 'vendas', 'anexos', 'temProposta', 'ContratoAvulsoSadeno', 'Veiculo', 'implantacao'));
+        return view('admin.propostas.show', compact('proposta', 'credito', 'planoRegra', 'vendas', 'anexos', 'temProposta', 'ContratoAvulsoSadeno', 'Veiculo', 'implantacao', 'temContratoAssinado'));
     }
 
     /**
@@ -277,9 +281,14 @@ class PropostaController extends Controller
 
         $temProposta = false;
 
+        $temContratoAssinado = false;
+
         foreach ($anexos as $a) {
             if ($a->tipo == "Proposta") {
                 $temProposta = true;
+            }
+            if ($a->tipo == "Contrato") {
+                $temContratoAssinado = true;
             }
         }
 
@@ -310,7 +319,29 @@ class PropostaController extends Controller
         $credito = Credito::where('cliente_id', $proposta->cliente_id)->first();
         $planoRegra = PlanoRegra::where('proposta_id', $proposta->id)->first();
 
-        return view('admin.propostas.show', compact('id', 'proposta', 'credito', 'planoRegra', 'temProposta', 'vendas', 'anexos'));
+        return view('admin.propostas.show', compact('id', 'proposta', 'credito', 'planoRegra', 'temProposta', 'vendas', 'anexos', 'temContratoAssinado'));
+    }
+
+    public function assinarContratoSadeno(Request $request, $id) {
+        $proposta = Proposta::find($id);
+        $cliente = Cliente::find($proposta->cliente->id);
+        $idContrato = [
+            'IDContrato' => $id
+        ];
+
+        $vendas = Venda::where('proposta_id', $id)->where('item', 'Caução')->get();
+        $debito = 0;
+        foreach ($vendas as $v) {
+            $debito += Venda::ValidarVenda($v->id, $v->valor);
+        }
+
+        if ($debito >= 0) {
+            return redirect()->back()->with('error', 'Exite cobrança pendente!');
+        }
+
+        $assinar = Http::withoutVerifying()->post('https://hmg.sadeno.qualityfrotas.com.br/index.php?r=integracao%2Fassinar-assinatura', $idContrato)->json();
+
+        return redirect()->back()->with('message', 'Contrato Assinado com Sucesso!');
     }
 
     public function criarcontratosadeno(Request $request, $id)
@@ -480,7 +511,7 @@ class PropostaController extends Controller
             ];
 
             $gerarCobranca = Http::post('https://api.iugu.com/v1/invoices?api_token=4403cd61ce8f5c55ea93497e4c6ca6a9', $cobranca)->json();
-            
+
             $salvarCobranca = new Pagamento();
             $salvarCobranca->valor = $proposta->valor_plano;
             $salvarCobranca->valorPago = 0;

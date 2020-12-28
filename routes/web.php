@@ -56,6 +56,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('proposta/ajustar/{id}', 'PropostaController@ajustarplano')->name('ajustarplano_proposta');
     Route::post('proposta/atualizarplano', 'PropostaController@atualizarplano')->name('atualizarplano_proposta');
     Route::get('proposta/contrato/{id}', 'PropostaController@criarcontratosadeno')->name('contrato_proposta');
+    Route::get('proposta/assinarcontrato/{id}', 'PropostaController@assinarContratoSadeno')->name('assinar_contrato');
     Route::get('proposta/imprimirProposta/{id}', 'PropostaController@imprimirProposta')->name('imprimir_proposta');
     Route::post('proposta/addVeiculo', 'PropostaController@AddVeiculo')->name('add_veiculo');
     Route::post('proposta/addImplantacao', 'PropostaController@AddImplantacao')->name('add_implantacao');
