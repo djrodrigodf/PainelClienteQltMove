@@ -4,14 +4,42 @@
     </div>
 
     <div class="card-body">
+
+        <div class="row">
+            <div class="col-md-12">
+                <a href="{{route('admin.clientes.create', ['carro' => 1])}}" class="btn btn-lg
+@if ($disponivel)
+                    btn-success
+                    @else
+                    btn-light
+                @endif
+">Veiculos Disponiveis</a>
+                <a href="{{route('admin.clientes.create')}}" class="btn btn-lg
+                 @if (!$disponivel)
+                    btn-success
+                    @else
+                    btn-light
+                @endif
+">Veiculos para Compra</a>
+            </div>
+        </div>
+
         <div class="row">
             <div class="col-md-7">
                 <div class="form-group">
-                    <label for="ref_banco_codigo">Veiculo</label>
-                    <select class="form-control select2" name="plano_nome" id="plano_nome">
+                    <label for="ref_banco_codigo">Veiculos</label>
+                    
+                    <select class="form-control select2 veiculosDisponiveis" name="plano_nome" id="plano_nome">
                         <option value="">Selecione</option>
                         @foreach($planos as $plano)
-                            <option value="{{$plano->veiculo}}">{{$plano->veiculo}} - Disponivel em patio ({{\App\Models\VwVeiculosDisponiveis::VeiculosDisponiveis($plano->versao)}})</option>
+                            @if (\App\Models\VwVeiculosDisponiveis::VeiculosDisponiveis($plano->versao) > 0 && $disponivel)
+                                <option value="{{$plano->veiculo}}">{{$plano->veiculo}}</option>
+                            @endif
+
+                                @if (\App\Models\VwVeiculosDisponiveis::VeiculosDisponiveis($plano->versao) == 0 && $disponivel == false)
+                                    <option value="{{$plano->veiculo}}">{{$plano->veiculo}}</option>
+                                @endif
+
                         @endforeach
                     </select>
                 </div>

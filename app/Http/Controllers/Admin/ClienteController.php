@@ -76,9 +76,17 @@ class ClienteController extends Controller
         }
     }
 
-    public function create()
+    public function create(Request $request)
     {
         abort_if(Gate::denies('cliente_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+
+            if ($request->get('carro')) {
+                $disponivel = true;
+            } else {
+                $disponivel = false;
+            }
+
 
         $referenia_pessoals = ReferenciaPessoal::all()->pluck('nome_completo', 'id');
 
@@ -88,7 +96,7 @@ class ClienteController extends Controller
 
         $statuses = StatusCliente::all()->pluck('status', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.clientes.create', compact('referenia_pessoals', 'referencia_bancarias', 'statuses', 'planos'));
+        return view('admin.clientes.create', compact('referenia_pessoals', 'referencia_bancarias', 'statuses', 'planos', 'disponivel'));
     }
 
     public function store(StoreClienteRequest $request)
