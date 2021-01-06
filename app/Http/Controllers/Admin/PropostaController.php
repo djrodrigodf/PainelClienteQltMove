@@ -582,9 +582,6 @@ class PropostaController extends Controller
                 'cpf_cnpj' => $cpf,
                 'email' => $proposta->cliente->email,
             ],
-            'splits' => [
-                0 => [],
-            ],
             'due_date' => Carbon::parse($DataVencimento)->format('Y-m-d'),
             'email' => $proposta->cliente->email,
             'payable_with' => 'all',
