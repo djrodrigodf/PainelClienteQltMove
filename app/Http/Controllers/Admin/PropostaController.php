@@ -638,7 +638,7 @@ class PropostaController extends Controller
                 "header" => "Authorization: Basic $auth",
             ],
         ]);
-        $filename = "Proposta-$id-".Carbon::now()->format('dmyHi');
+        $filename = "Contrato-$id-".Carbon::now()->format('dmyHi');
         $data = file_get_contents('http://10.2.5.86:8080/jasperserver/rest_v2/reports/reports/assinatura/Contrato.pdf?Contrato='.$id, false, $context);
 
         header("Content-type: application/octet-stream");
