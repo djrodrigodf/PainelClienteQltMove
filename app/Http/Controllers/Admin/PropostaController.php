@@ -621,6 +621,24 @@ class PropostaController extends Controller
             ],
         ]);
         $filename = "Proposta-$id-".Carbon::now()->format('dmyHi');
+        $data = file_get_contents('http://10.2.5.86:8080/jasperserver/rest_v2/reports/reports/assinatura/Proposta.pdf?Contrato='.$id, false, $context);
+
+        header("Content-type: application/octet-stream");
+        header("Content-disposition: attachment;filename=$filename.pdf");
+
+        return $data;
+    }
+
+    public function imprimirContrato(Request $request, $id)
+    {
+
+        $auth = base64_encode("jasperadmin:jasperadmin");
+        $context = stream_context_create([
+            "http" => [
+                "header" => "Authorization: Basic $auth",
+            ],
+        ]);
+        $filename = "Proposta-$id-".Carbon::now()->format('dmyHi');
         $data = file_get_contents('http://10.2.5.86:8080/jasperserver/rest_v2/reports/reports/assinatura/Contrato.pdf?Contrato='.$id, false, $context);
 
         header("Content-type: application/octet-stream");

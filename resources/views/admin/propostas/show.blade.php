@@ -28,6 +28,11 @@
                     @endif
                 @endif
 
+                    @if($proposta->status_id == 4)
+                        <a id="ajustar_plano" href="{{route('admin.imprimir_contrato', $proposta->id)}}" class="btn btn-success my-auto mr-3">Imprimir Contrato</a>
+                    @endif
+
+
                     @if ($temContratoAssinado && $proposta->status_id == 4)
                         <a id="contrato" href="{{route('admin.assinar_contrato', $proposta->id)}}" class="btn btn-success my-auto">Assinar Contrato</a>
                     @endif
